@@ -42,7 +42,7 @@ int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *paren
     LY_ERR ly_error = LY_SUCCESS;
     char path_buffer[PATH_MAX] = {0};
 
-    if (snprintf(path_buffer, sizeof(path_buffer), "%s[%s=%s]", path, key, key_value) < 0)
+    if (snprintf(path_buffer, sizeof(path_buffer), "%s[%s=\"%s\"]", path, key, key_value) < 0)
     {
         return -1;
     }
