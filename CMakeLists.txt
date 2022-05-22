@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(srpc C)
 
+include(GNUInstallDirs)
+
 SET(
     SRPC_SOURCES
 
@@ -19,3 +21,8 @@ include_directories(${SYSREPO_INCLUDE_DIRS})
 add_library(${PROJECT_NAME} ${SRPC_SOURCES})
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(FILES ${PROJECT_SOURCE_DIR}/src/srpc.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h ${PROJECT_SOURCE_DIR}/src/srpc/common.h ${PROJECT_SOURCE_DIR}/src/srpc/types.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc)
+
+add_custom_target(uninstall COMMAND xargs rm < ${PROJECT_SOURCE_DIR}/build/install_manifest.txt)
