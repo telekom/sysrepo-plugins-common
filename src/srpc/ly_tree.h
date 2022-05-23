@@ -21,6 +21,67 @@ int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *
                                   const char *path);
 
 /**
+ * Generic child search.
+ *
+ * @param node Node to search.
+ * @param node_type Schema node type - LYS_CONTAINER, LYS_LIST etc.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child(const struct lyd_node *node, uint16_t node_type, const char *name);
+
+/**
+ * Container node search.
+ *
+ * @param node Node to search.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child_container(const struct lyd_node *node, const char *name);
+
+/**
+ * List node search.
+ *
+ * @param node Node to search.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child_list(const struct lyd_node *node, const char *name);
+
+/**
+ * Leaf list node search.
+ *
+ * @param node Node to search.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child_leaf_list(const struct lyd_node *node, const char *name);
+
+/**
+ * Leaf node search.
+ *
+ * @param node Node to search.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child_leaf(const struct lyd_node *node, const char *name);
+
+/**
+ * Choice node search.
+ *
+ * @param node Node to search.
+ * @param name Name of the node to search for.
+ *
+ * @return Child node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_child_choice(const struct lyd_node *node, const char *name);
+
+/**
  * Create a list node inside of the parent node using the provided path, key and its value.
  *
  * @param ly_ctx libyang context to use.
