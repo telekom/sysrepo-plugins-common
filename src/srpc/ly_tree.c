@@ -39,7 +39,7 @@ struct lyd_node *srpc_ly_tree_get_child(const struct lyd_node *node, uint16_t no
 
     while (ch)
     {
-        if (!strcmp(LYD_NAME(node), name) && node->schema->nodetype == node_type)
+        if (strcmp(LYD_NAME(ch), name) == 0 && node->schema->nodetype == node_type)
         {
             return ch;
         }
