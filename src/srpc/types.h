@@ -44,6 +44,10 @@ struct srpc_rpc_s
 typedef int (*srpc_startup_load_cb)(void *priv, sr_session_ctx_t *session, const struct ly_ctx *ly_ctx,
                                     struct lyd_node *parent_node);
 
+/** Callback type for storing values from provided parent node. Setup an array of callbacks and use them on the needed
+ * node. */
+typedef int (*srpc_startup_store_cb)(void *priv, const struct lyd_node *parent_node);
+
 /** Callback type for applying changes when using sr_get_change_tree_next() functionality. */
 typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const char *prev_value,
                               const struct lyd_node *node, sr_change_oper_t operation);
