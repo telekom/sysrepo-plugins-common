@@ -72,6 +72,24 @@ struct lyd_node *srpc_ly_tree_get_child_leaf_list(const struct lyd_node *node, c
 struct lyd_node *srpc_ly_tree_get_child_leaf(const struct lyd_node *node, const char *name);
 
 /**
+ * Get next list element.
+ *
+ * @param node Current list element.
+ *
+ * @return Next list node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_list_next(const struct lyd_node *node);
+
+/**
+ * Get next leaf list element.
+ *
+ * @param node Current leaf list element.
+ *
+ * @return Next list node, NULL if not found.
+ */
+struct lyd_node *srpc_ly_tree_get_leaf_list_next(const struct lyd_node *node);
+
+/**
  * Choice node search.
  *
  * @param node Node to search.
