@@ -61,7 +61,7 @@ size_t srpc_change_node_get_children_count(srpc_change_node_t *node);
  * @param node Node to use.
  * @param n Child index number.
  *
- * @return Child at n'th position.
+ * @return Child node at the n'th position.
  */
 srpc_change_node_t *srpc_change_node_get_child(srpc_change_node_t *node, const size_t n);
 
