@@ -13,6 +13,7 @@ typedef struct srpc_operational_s srpc_operational_t;
 typedef struct srpc_rpc_s srpc_rpc_t;
 typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
+typedef struct srpc_change_node_s srpc_change_node_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
 
 /**
