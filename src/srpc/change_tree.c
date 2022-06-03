@@ -1,5 +1,7 @@
 #include "change_tree.h"
 
+#include <assert.h>
+
 /**
  * Change tree node.
  */
@@ -150,6 +152,21 @@ srpc_change_node_t *srpc_change_node_add_child(srpc_change_node_t *node, const c
 size_t srpc_change_node_get_children_count(srpc_change_node_t *node)
 {
     return node->children_count;
+}
+
+/**
+ * Return n'th child.
+ *
+ * @param node Node to use.
+ * @param n Child index number.
+ *
+ * @return Child at n'th position.
+ */
+srpc_change_node_t *srpc_change_node_get_child(srpc_change_node_t *node, const size_t n)
+{
+    // index has to be passed from the loop which iterates over indexes
+    assert(n < node->children_count);
+    return node->children[n];
 }
 
 /**
