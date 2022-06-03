@@ -31,7 +31,11 @@ install(
 )
 
 install(
-    FILES ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h ${PROJECT_SOURCE_DIR}/src/srpc/common.h ${PROJECT_SOURCE_DIR}/src/srpc/types.h ${PROJECT_SOURCE_DIR}/src/srpc/change_tree.h
+    FILES
+        ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h
+        ${PROJECT_SOURCE_DIR}/src/srpc/common.h
+        ${PROJECT_SOURCE_DIR}/src/srpc/types.h
+        ${PROJECT_SOURCE_DIR}/src/srpc/change_tree.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc
 )
 
