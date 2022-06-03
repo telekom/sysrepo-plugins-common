@@ -5,8 +5,9 @@
 #ifndef SRPC_H
 #define SRPC_H
 
+#include <srpc/types.h>
+#include <srpc/change_tree.h>
 #include <srpc/common.h>
 #include <srpc/ly_tree.h>
-#include <srpc/types.h>
 
 #endif // SRPC_H
