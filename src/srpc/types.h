@@ -13,6 +13,7 @@ typedef struct srpc_operational_s srpc_operational_t;
 typedef struct srpc_rpc_s srpc_rpc_t;
 typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
+typedef enum srpc_check_status_e srpc_check_status_t;
 
 /**
  * Struct used to gather all module change callbacks based on a path.
@@ -70,6 +71,19 @@ struct srpc_startup_load_s
 {
     const char *name;        ///< Name of the value for which the callback is being called.
     srpc_startup_load_cb cb; ///< Load callback.
+};
+
+/**
+ * Used as return codes of the check API for particular YANG values (leafs, leaf-list or list).
+ * The enum value is returned from a function which checks wether the value/values exist/exists on the system or not.
+ */
+enum srpc_check_status_e
+{
+    srpc_check_status_none = 0,     ///< Default value - means nothing.
+    srpc_check_status_error,        ///< Error with comparing values.
+    srpc_check_status_non_existant, ///< The values don't exist on the system at all.
+    srpc_check_status_equal,        ///< The values exist and they are all equal to the compared values.
+    srpc_check_status_partial,      ///< The values are partially equal - some exist and some don't.
 };
 
 #endif // SRPC_TYPES_H
