@@ -1,4 +1,5 @@
 #include "change_tree.h"
+#include "srpc/types.h"
 
 #include <assert.h>
 
@@ -20,6 +21,9 @@ struct srpc_change_node_s
     srpc_change_node_t **children; ///< Children of the current node.
     size_t children_count;         ///< Number of children for the node.
 };
+
+static void srpc_change_node_print_indent(const srpc_change_node_t *node, FILE *file, int indent);
+static const char *srpc_change_node_get_operation_str(const srpc_change_node_t *node);
 
 /**
  * Create a new node with the given name.
@@ -285,6 +289,18 @@ const srpc_change_node_t *srpc_change_node_get_child_by_previous_value(const srp
 }
 
 /**
+ * Debug function to print tree contents to the provided file.
+ *
+ * @param node Node to use.
+ * @param file File to print to.
+ *
+ */
+void srpc_change_node_print(const srpc_change_node_t *node, FILE *file)
+{
+    srpc_change_node_print_indent(node, file, 0);
+}
+
+/**
  * Free the whole tree starting from the given node.
  *
  * @param node Node to free.
@@ -292,12 +308,7 @@ const srpc_change_node_t *srpc_change_node_get_child_by_previous_value(const srp
  */
 void srpc_change_node_free(srpc_change_node_t *node)
 {
-    // free recursively
-    if (!node)
-    {
-        return;
-    }
-
+    // free recursively - children first
     for (size_t i = 0; i < node->children_count; i++)
     {
         srpc_change_node_free(node->children[i]);
@@ -320,4 +331,35 @@ void srpc_change_node_free(srpc_change_node_t *node)
 
     // free node allocated pointer
     free(node);
+}
+
+static void srpc_change_node_print_indent(const srpc_change_node_t *node, FILE *file, int indent)
+{
+    // print indent
+    for (int i = 0; i < indent; i++)
+    {
+        fprintf(file, "  ");
+    }
+
+    // print node info
+    fprintf(file, "%s {operation: %s, value.current: %s, value.previous: %s}\n", node->data.name,
+            srpc_change_node_get_operation_str(node), node->data.value.current, node->data.value.previous);
+
+    // print indented children
+    for (size_t i = 0; i < node->children_count; i++)
+    {
+        srpc_change_node_print_indent(node->children[i], file, indent + 1);
+    }
+}
+
+static const char *srpc_change_node_get_operation_str(const srpc_change_node_t *node)
+{
+    const char *map[] = {
+        [SR_OP_CREATED] = "CREATED",
+        [SR_OP_MODIFIED] = "MODIFIED",
+        [SR_OP_DELETED] = "DELETED",
+        [SR_OP_MOVED] = "MOVED",
+    };
+
+    return map[node->data.operation];
 }

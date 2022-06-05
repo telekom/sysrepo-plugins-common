@@ -136,6 +136,15 @@ const srpc_change_node_t *srpc_change_node_get_child_by_previous_value(const srp
                                                                        const char *value);
 
 /**
+ * Debug function to print tree contents to the provided file.
+ *
+ * @param node Node to use.
+ * @param file File to print to.
+ *
+ */
+void srpc_change_node_print(const srpc_change_node_t *node, FILE *file);
+
+/**
  * Free the whole tree starting from the given node.
  *
  * @param node Node to free.
