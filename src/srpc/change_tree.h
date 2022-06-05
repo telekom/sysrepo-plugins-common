@@ -23,7 +23,7 @@ srpc_change_node_t *srpc_change_node_new(const char *name);
  *
  * @return Node name.
  */
-const char *srpc_change_node_get_name(srpc_change_node_t *node);
+const char *srpc_change_node_get_name(const srpc_change_node_t *node);
 
 /**
  * Set values pair for the node.
@@ -43,7 +43,7 @@ int srpc_change_node_set_value(srpc_change_node_t *node, const char *current_val
  *
  * @return Currently set value of the node.
  */
-const char *srpc_change_node_get_current_value(srpc_change_node_t *node);
+const char *srpc_change_node_get_current_value(const srpc_change_node_t *node);
 
 /**
  * Get previous value of the node.
@@ -52,7 +52,7 @@ const char *srpc_change_node_get_current_value(srpc_change_node_t *node);
  *
  * @return Previous set value of the node.
  */
-const char *srpc_change_node_get_previous_value(srpc_change_node_t *node);
+const char *srpc_change_node_get_previous_value(const srpc_change_node_t *node);
 
 /**
  * Set node operation to apply.
@@ -70,7 +70,7 @@ void srpc_change_node_set_operation(srpc_change_node_t *node, sr_change_oper_t o
  *
  * @return Operation on the node.
  */
-sr_change_oper_t srpc_change_node_get_operation(srpc_change_node_t *node);
+sr_change_oper_t srpc_change_node_get_operation(const srpc_change_node_t *node);
 
 /**
  * Create a child and append it to the list of children for the given node.
@@ -89,7 +89,7 @@ srpc_change_node_t *srpc_change_node_add_child(srpc_change_node_t *node, const c
  *
  * @return Number of children a node has.
  */
-size_t srpc_change_node_get_children_count(srpc_change_node_t *node);
+size_t srpc_change_node_get_children_count(const srpc_change_node_t *node);
 
 /**
  * Return n'th child.
@@ -99,7 +99,7 @@ size_t srpc_change_node_get_children_count(srpc_change_node_t *node);
  *
  * @return Child node at the n'th position.
  */
-const srpc_change_node_t *srpc_change_node_get_child(srpc_change_node_t *node, const size_t n);
+const srpc_change_node_t *srpc_change_node_get_child(const srpc_change_node_t *node, const size_t n);
 
 /**
  * Return child with the provided name.
@@ -109,7 +109,7 @@ const srpc_change_node_t *srpc_change_node_get_child(srpc_change_node_t *node, c
  *
  * @return First found child with the provided name, NULL if not found.
  */
-const srpc_change_node_t *srpc_change_node_get_child_by_name(srpc_change_node_t *node, const char *name);
+const srpc_change_node_t *srpc_change_node_get_child_by_name(const srpc_change_node_t *node, const char *name);
 
 /**
  * Return child with the provided name and value.
@@ -120,7 +120,7 @@ const srpc_change_node_t *srpc_change_node_get_child_by_name(srpc_change_node_t 
  *
  * @return First found child with the provided name and value, NULL if not found.
  */
-const srpc_change_node_t *srpc_change_node_get_child_by_current_value(srpc_change_node_t *node, const char *name,
+const srpc_change_node_t *srpc_change_node_get_child_by_current_value(const srpc_change_node_t *node, const char *name,
                                                                       const char *value);
 
 /**
@@ -132,7 +132,7 @@ const srpc_change_node_t *srpc_change_node_get_child_by_current_value(srpc_chang
  *
  * @return First found child with the provided name and value, NULL if not found.
  */
-const srpc_change_node_t *srpc_change_node_get_child_by_previous_value(srpc_change_node_t *node, const char *name,
+const srpc_change_node_t *srpc_change_node_get_child_by_previous_value(const srpc_change_node_t *node, const char *name,
                                                                        const char *value);
 
 /**
