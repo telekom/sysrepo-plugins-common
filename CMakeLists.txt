@@ -40,3 +40,9 @@ install(
 )
 
 add_custom_target(uninstall COMMAND xargs rm < ${PROJECT_SOURCE_DIR}/build/install_manifest.txt)
+
+if(ENABLE_TESTS)
+    find_package(CMOCKA REQUIRED)
+    include(CTest)
+    include(test/Tests.cmake)
+endif()
