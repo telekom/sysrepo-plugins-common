@@ -54,7 +54,7 @@ void srpc_change_node_set_operation(srpc_node_t *node, sr_change_oper_t operatio
  *
  * @return Operation of the node.
  */
-const sr_change_oper_t srpc_change_node_get_operation(srpc_node_t *node)
+const sr_change_oper_t srpc_change_node_get_operation(const srpc_node_t *node)
 {
     const srpc_change_data_t *data = srpc_node_get_data(node);
     return data->operation;
