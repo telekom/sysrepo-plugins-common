@@ -1,11 +1,11 @@
 add_executable(
-	test_change_tree
+	test_node
 
-    test/test_change_tree.c
+    test/test_node.c
 )
 
 target_link_libraries(
-    test_change_tree
+    test_node
 
 	${CMOCKA_LIBRARIES}
 	${SYSREPO_LIBRARIES}
@@ -13,4 +13,4 @@ target_link_libraries(
 	${CMAKE_PROJECT_NAME}
 )
 
-add_test(NAME test_change_tree COMMAND test_change_tree)
+add_test(NAME test_node COMMAND test_node)

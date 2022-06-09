@@ -14,6 +14,7 @@ typedef struct srpc_rpc_s srpc_rpc_t;
 typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
 typedef struct srpc_change_node_s srpc_change_node_t;
+typedef struct srpc_node_s srpc_node_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
 
 /**
@@ -55,6 +56,18 @@ typedef int (*srpc_startup_store_cb)(void *priv, const struct lyd_node *parent_n
 /** Callback type for applying changes when using sr_get_change_tree_next() functionality. */
 typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const char *prev_value,
                               const struct lyd_node *node, sr_change_oper_t operation);
+
+/** Callback used to allocate data for the new node. */
+typedef void *(*srpc_node_data_alloc_cb)();
+
+/** Callback used for node data comparison. */
+typedef int (*srpc_node_data_cmp_cb)(const void *n1, const void *n2);
+
+/** Callback used to free the node data. */
+typedef void (*srpc_node_data_dealloc_cb)(void **value);
+
+/** Callback used to print node data. */
+typedef void (*srpc_node_data_print_cb)(const char *node_name, const void *data, FILE *file);
 
 /**
  * Used mostly for error messages with the provided callback.
