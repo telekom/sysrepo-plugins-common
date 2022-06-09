@@ -54,7 +54,7 @@ void srpc_change_node_set_operation(srpc_node_t *node, sr_change_oper_t operatio
  *
  * @return Operation of the node.
  */
-const sr_change_oper_t srpc_change_node_get_operation(const srpc_node_t *node)
+sr_change_oper_t srpc_change_node_get_operation(const srpc_node_t *node)
 {
     const srpc_change_data_t *data = srpc_node_get_data(node);
     return data->operation;
@@ -109,7 +109,7 @@ int srpc_change_node_set_value(srpc_node_t *node, const char *current_value, con
  *
  * @return Current node value.
  */
-const char *srpc_change_node_get_current_value(srpc_node_t *node)
+const char *srpc_change_node_get_current_value(const srpc_node_t *node)
 {
     const srpc_change_data_t *data = srpc_node_get_data(node);
     return data->value.current;
@@ -122,7 +122,7 @@ const char *srpc_change_node_get_current_value(srpc_node_t *node)
  *
  * @return Previous node value.
  */
-const char *srpc_change_node_get_previous_value(srpc_node_t *node)
+const char *srpc_change_node_get_previous_value(const srpc_node_t *node)
 {
     const srpc_change_data_t *data = srpc_node_get_data(node);
     return data->value.previous;

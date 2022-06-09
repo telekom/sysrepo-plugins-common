@@ -14,7 +14,7 @@
  * @param iter Iterator variable name.
  *
  */
-#define SRPC_NODE_ITER(node, iter) for ((iter) = (node); (iter) != NULL; (iter) = srpc_node_get_next(iter))
+#define SRPC_NODE_ITER_SIBLINGS(node, iter) for ((iter) = (node); (iter) != NULL; (iter) = srpc_node_get_next(iter))
 
 /**
  * Macro for iterating node children.
