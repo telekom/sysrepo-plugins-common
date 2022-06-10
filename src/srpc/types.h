@@ -15,6 +15,7 @@ typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
 typedef struct srpc_node_s srpc_node_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
+typedef enum srpc_any_node_kind_e srpc_any_node_kind_t;
 
 /**
  * Struct used to gather all module change callbacks based on a path.
@@ -97,6 +98,26 @@ enum srpc_check_status_e
     srpc_check_status_non_existant, ///< The values don't exist on the system at all.
     srpc_check_status_equal,        ///< The values exist and they are all equal to the compared values.
     srpc_check_status_partial,      ///< The values are partially equal - some exist and some don't.
+};
+
+/**
+ * Kind/type of the "any" node.
+ */
+enum srpc_any_node_kind_e
+{
+    srpc_any_node_kind_none = 0, ///< No set kind for the node.
+    srpc_any_node_kind_s8,       ///< int8_t
+    srpc_any_node_kind_u8,       ///< uint8_t
+    srpc_any_node_kind_s16,      ///< int16_t
+    srpc_any_node_kind_u16,      ///< uint16_t
+    srpc_any_node_kind_s32,      ///< int32_t
+    srpc_any_node_kind_u32,      ///< uint32_t
+    srpc_any_node_kind_s64,      ///< int64_t
+    srpc_any_node_kind_u64,      ///< uint64_t
+    srpc_any_node_kind_float,    ///< float
+    srpc_any_node_kind_double,   ///< double
+    srpc_any_node_kind_str,      ///< const char *
+    srpc_any_node_kind_mem,      ///< void *
 };
 
 #endif // SRPC_TYPES_H

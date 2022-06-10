@@ -10,6 +10,7 @@ SET(
     src/srpc/ly_tree.c
     src/srpc/common.c
 
+    src/srpc/node/any.c
     src/srpc/node/basic.c
     src/srpc/node/change.c
 )
@@ -44,6 +45,7 @@ install(
 
 install(
     FILES
+        ${PROJECT_SOURCE_DIR}/src/srpc/node/any.h
         ${PROJECT_SOURCE_DIR}/src/srpc/node/basic.h
         ${PROJECT_SOURCE_DIR}/src/srpc/node/change.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc/node
