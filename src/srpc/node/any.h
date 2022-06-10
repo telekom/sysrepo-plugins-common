@@ -17,6 +17,15 @@
 srpc_node_t *srpc_any_node_new(const char *name);
 
 /**
+ * Get node type.
+ *
+ * @param node Node to use.
+ *
+ * @return Current node type.
+ */
+srpc_any_node_kind_t srpc_any_node_get_kind(const srpc_node_t *node);
+
+/**
  * Set node value.
  *
  * @param node Node to use.
