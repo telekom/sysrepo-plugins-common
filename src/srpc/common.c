@@ -70,7 +70,8 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
     error = sr_get_changes_iter(session, xpath, &changes_iterator);
     if (error != SR_ERR_OK)
     {
-        return -1;
+        error = -1;
+        goto out;
     }
 
     int counter = 2;
@@ -83,10 +84,15 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
         if (error)
         {
             // return number of invalid callback
-            return -counter;
+            error = -counter;
+            goto out;
         }
         ++counter;
     }
+
+out:
+    // free iterator data
+    sr_free_change_iter(changes_iterator);
 
     return 0;
 }
