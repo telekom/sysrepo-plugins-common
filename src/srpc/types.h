@@ -14,6 +14,7 @@ typedef struct srpc_rpc_s srpc_rpc_t;
 typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
 typedef struct srpc_node_s srpc_node_t;
+typedef struct srpc_change_ctx_s srpc_change_ctx_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
 typedef enum srpc_any_node_kind_e srpc_any_node_kind_t;
 
@@ -54,8 +55,7 @@ typedef int (*srpc_startup_load_cb)(void *priv, sr_session_ctx_t *session, const
 typedef int (*srpc_startup_store_cb)(void *priv, const struct lyd_node *parent_node);
 
 /** Callback type for applying changes when using sr_get_change_tree_next() functionality. */
-typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const char *prev_value,
-                              const struct lyd_node *node, sr_change_oper_t operation);
+typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const srpc_change_ctx_t *change_ctx);
 
 /** Callback used to allocate data for the new node. */
 typedef void *(*srpc_node_data_alloc_cb)();
@@ -85,6 +85,18 @@ struct srpc_startup_load_s
 {
     const char *name;        ///< Name of the value for which the callback is being called.
     srpc_startup_load_cb cb; ///< Load callback.
+};
+
+/**
+ * Change context - operation, previous value etc.
+ */
+struct srpc_change_ctx_s
+{
+    const struct lyd_node *node; ///< Current changed libyang node.
+    const char *previous_value;  ///< Previous node value.
+    const char *previous_list;   ///< Previous list keys predicate.
+    int previous_default;        ///< Previous value default flag.
+    sr_change_oper_t operation;  ///< Operation being applied on the node.
 };
 
 /**

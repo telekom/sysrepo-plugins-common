@@ -62,6 +62,8 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
     const char *prev_value = NULL, *prev_list = NULL;
     int prev_default;
 
+    srpc_change_ctx_t change_ctx;
+
     // libyang
     const struct lyd_node *node = NULL;
 
@@ -73,10 +75,11 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
 
     int counter = 2;
 
-    while (sr_get_change_tree_next(session, changes_iterator, &operation, &node, &prev_value, &prev_list,
-                                   &prev_default) == SR_ERR_OK)
+    while (sr_get_change_tree_next(session, changes_iterator, &change_ctx.operation, &change_ctx.node,
+                                   &change_ctx.previous_value, &change_ctx.previous_list,
+                                   &change_ctx.previous_default) == SR_ERR_OK)
     {
-        error = cb(priv, session, prev_value, node, operation);
+        error = cb(priv, session, &change_ctx);
         if (error)
         {
             // return number of invalid callback
