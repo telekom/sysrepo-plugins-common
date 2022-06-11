@@ -58,7 +58,7 @@ typedef int (*srpc_startup_store_cb)(void *priv, const struct lyd_node *parent_n
 typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const srpc_change_ctx_t *change_ctx);
 
 /** Callback used to allocate data for the new node. */
-typedef void *(*srpc_node_data_alloc_cb)();
+typedef void *(*srpc_node_data_alloc_cb)(void);
 
 /** Callback used for node data comparison. */
 typedef int (*srpc_node_data_cmp_cb)(const void *n1, const void *n2);
