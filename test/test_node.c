@@ -9,6 +9,7 @@
 #include <srpc.h>
 
 static void test_basic_node_new(void **state);
+static void test_basic_node_remove(void **state);
 static void test_basic_node_find(void **state);
 
 static void test_any_node_new(void **state);
@@ -17,6 +18,7 @@ int main(void)
 {
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(test_basic_node_new),
+        cmocka_unit_test(test_basic_node_remove),
         cmocka_unit_test(test_basic_node_find),
         cmocka_unit_test(test_any_node_new),
     };
@@ -54,6 +56,52 @@ static void test_basic_node_new(void **state)
         ++count;
     }
     assert_int_equal(count, 10);
+
+    // free memory
+    srpc_basic_node_free(root);
+}
+
+static void test_basic_node_remove(void **state)
+{
+    (void)state;
+    int rc = 0;
+    srpc_node_t *root = NULL;
+    srpc_node_t *child = NULL;
+    srpc_node_t *new_next = NULL;
+    srpc_node_t *iter = NULL;
+    const srpc_node_t *found = NULL;
+
+    char name_buffer[15] = {0};
+
+    root = srpc_basic_node_new("servers");
+
+    for (int i = 0; i < 10; i++)
+    {
+        snprintf(name_buffer, sizeof(name_buffer), "server%d", i);
+        child = srpc_basic_node_add_child(root, name_buffer);
+
+        rc = srpc_basic_node_set_value(child, "127.0.0.1");
+
+        assert_int_equal(rc, 0);
+
+        // make sure the child is added
+        assert_non_null(child);
+    }
+
+    // iterate until one of the children found - remove it and test for memory leaks or invalid pointer settings
+    SRPC_NODE_ITER_CHILDREN(root, iter)
+    {
+        if (strcmp(srpc_node_get_name(iter), "server2") == 0)
+        {
+            srpc_basic_node_remove_child(root, iter, &iter);
+        }
+    }
+
+    // make sure the node is removed
+    found = srpc_node_get_child_by_name(root, "server2");
+    assert_null(found);
+
+    srpc_basic_node_print(root, stdout);
 
     // free memory
     srpc_basic_node_free(root);

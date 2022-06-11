@@ -445,6 +445,19 @@ srpc_node_t *srpc_any_node_add_child(srpc_node_t *node, const char *name)
 }
 
 /**
+ * Remove provided child from the node children list while iterating children.
+ *
+ * @param node Node to use.
+ * @param child Child pointer to remove.
+ * @param iter Iterator being used. Can be set to NULL if not needed.
+ *
+ */
+void srpc_any_node_remove_child(srpc_node_t *node, srpc_node_t *child, srpc_node_t **iter)
+{
+    srpc_node_remove_child(node, child, iter, srpc_any_node_data_dealloc);
+}
+
+/**
  * Debug function to print tree contents to the provided file.
  *
  * @param node Node to use.

@@ -72,7 +72,7 @@ void srpc_node_set_next(srpc_node_t *node, const srpc_node_t *next);
  *
  * @return Next node of the current node, NULL if one doesn't exist.
  */
-const srpc_node_t *srpc_node_get_next(const srpc_node_t *node);
+srpc_node_t *srpc_node_get_next(const srpc_node_t *node);
 
 /**
  * Return first child of the provided node.
@@ -81,7 +81,19 @@ const srpc_node_t *srpc_node_get_next(const srpc_node_t *node);
  *
  * @return First found child, NULL if one doesn't exist.
  */
-const srpc_node_t *srpc_node_get_child(const srpc_node_t *node);
+srpc_node_t *srpc_node_get_child(const srpc_node_t *node);
+
+/**
+ * Remove provided child from the node children list while iterating children.
+ *
+ * @param node Node to use.
+ * @param child Child pointer to remove.
+ * @param iter Iterator being used. Can be set to NULL if not needed.
+ * @param dealloc Deallocator for node data.
+ *
+ */
+void srpc_node_remove_child(srpc_node_t *node, srpc_node_t *child, srpc_node_t **iter,
+                            srpc_node_data_dealloc_cb dealloc);
 
 /**
  * Return child with the provided name.

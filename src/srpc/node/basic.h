@@ -46,6 +46,16 @@ const char *srpc_basic_node_get_value(const srpc_node_t *node);
 srpc_node_t *srpc_basic_node_add_child(srpc_node_t *node, const char *name);
 
 /**
+ * Remove provided child from the node children list while iterating children.
+ *
+ * @param node Node to use.
+ * @param child Child pointer to remove.
+ * @param iter Iterator being used. Can be set to NULL if not needed.
+ *
+ */
+void srpc_basic_node_remove_child(srpc_node_t *node, srpc_node_t *child, srpc_node_t **iter);
+
+/**
  * Return child with the provided name and value.
  *
  * @param node Node to use.

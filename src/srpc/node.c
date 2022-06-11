@@ -1,4 +1,5 @@
 #include "node.h"
+#include "srpc/types.h"
 
 /**
  * SRPC node.
@@ -133,7 +134,7 @@ void srpc_node_set_next(srpc_node_t *node, const srpc_node_t *next)
  *
  * @return Next node of the current node, NULL if one doesn't exist.
  */
-const srpc_node_t *srpc_node_get_next(const srpc_node_t *node)
+srpc_node_t *srpc_node_get_next(const srpc_node_t *node)
 {
     return node->next;
 }
@@ -145,9 +146,58 @@ const srpc_node_t *srpc_node_get_next(const srpc_node_t *node)
  *
  * @return First found child, NULL if one doesn't exist.
  */
-const srpc_node_t *srpc_node_get_child(const srpc_node_t *node)
+srpc_node_t *srpc_node_get_child(const srpc_node_t *node)
 {
     return node->child;
+}
+
+/**
+ * Remove provided child from the node children list while iterating children.
+ *
+ * @param node Node to use.
+ * @param child Child pointer to remove.
+ * @param iter Iterator being used. Can be set to NULL if not needed.
+ * @param dealloc Deallocator for node data.
+ *
+ */
+void srpc_node_remove_child(srpc_node_t *node, srpc_node_t *child, srpc_node_t **iter,
+                            srpc_node_data_dealloc_cb dealloc)
+{
+    srpc_node_t *ch = node->child, *prev = NULL, *next_iter = NULL;
+
+    if (ch == child)
+    {
+        node->child = ch->next;
+        if (iter)
+        {
+            next_iter = ch->next;
+        }
+    }
+    else
+    {
+        for (; ch != NULL; ch = ch->next)
+        {
+            if (ch == child)
+            {
+                prev->next = ch->next;
+                if (iter)
+                {
+                    next_iter = ch->next;
+                }
+                break;
+            }
+            prev = ch;
+        }
+    }
+
+    // disable next pointer on the child node - only the node and children should be free'd after
+    child->next = NULL;
+
+    // free child node
+    srpc_node_free(child, dealloc);
+
+    // set iter last - iter can be both child to remove and to set later
+    *iter = next_iter;
 }
 
 /**
