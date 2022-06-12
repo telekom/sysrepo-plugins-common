@@ -15,6 +15,7 @@ typedef struct srpc_startup_load_s srpc_startup_load_t;
 typedef struct srpc_startup_store_s srpc_startup_store_t;
 typedef struct srpc_node_s srpc_node_t;
 typedef struct srpc_change_ctx_s srpc_change_ctx_t;
+typedef struct srpc_key_value_pair_s srpc_key_value_pair_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
 typedef enum srpc_any_node_kind_e srpc_any_node_kind_t;
 
@@ -97,6 +98,15 @@ struct srpc_change_ctx_s
     const char *previous_list;   ///< Previous list keys predicate.
     int previous_default;        ///< Previous value default flag.
     sr_change_oper_t operation;  ///< Operation being applied on the node.
+};
+
+/**
+ * List key/value pair - used for creating list elements.
+ */
+struct srpc_key_value_pair_s
+{
+    const char *key;   ///< List key.
+    const char *value; ///< Value for the list key.
 };
 
 /**
