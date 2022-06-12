@@ -5,6 +5,7 @@
 #ifndef SRPC_LY_TREE_H
 #define SRPC_LY_TREE_H
 
+#include "types.h"
 #include <libyang/libyang.h>
 
 /**
@@ -113,6 +114,21 @@ struct lyd_node *srpc_ly_tree_get_child_choice(const struct lyd_node *node, cons
  */
 int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
                              const char *path, const char *key, const char *key_value);
+
+/**
+ * Create a list node based on all key value pairs.
+ *
+ * @param ly_ctx libyang context to use.
+ * @param parent Parent node to add the child container to.
+ * @param store  Variable to which the created container will be stored.
+ * @param path Path of the node to create.
+ * @param kv_pairs Key/value pairs.
+ * @param keys_count Number of passed key/value pairs.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
+                                  const char *path, const srpc_key_value_pair_t kv_pairs[], const size_t keys_count);
 
 /**
  * Create a leaf node inside of the parent node using the provided path and value.

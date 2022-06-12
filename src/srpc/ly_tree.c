@@ -197,6 +197,48 @@ int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *paren
 }
 
 /**
+ * Create a list node based on all key value pairs.
+ *
+ * @param ly_ctx libyang context to use.
+ * @param parent Parent node to add the child container to.
+ * @param store  Variable to which the created container will be stored.
+ * @param path Path of the node to create.
+ * @param kv_pairs Key/value pairs.
+ * @param keys_count Number of passed key/value pairs.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
+                                  const char *path, const srpc_key_value_pair_t kv_pairs[], const size_t keys_count)
+{
+    LY_ERR ly_error = LY_SUCCESS;
+    char path_buffer[PATH_MAX] = {0};
+    char *next_ptr = NULL;
+    int rc = 0;
+
+    rc = snprintf(path_buffer, sizeof(path_buffer), "%s", path);
+
+    for (int i = 0; i < keys_count; i++)
+    {
+        next_ptr = path_buffer + rc;
+        rc = snprintf(next_ptr, sizeof(path_buffer) - (next_ptr - path_buffer), "[%s=\"%s\"]", kv_pairs[i].key,
+                      kv_pairs[i].value);
+        if (rc < 0)
+        {
+            return i;
+        }
+    }
+
+    ly_error = lyd_new_path(parent, ly_ctx, path_buffer, NULL, 0, store);
+    if (ly_error != LY_SUCCESS)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
+/**
  * Create a leaf node inside of the parent node using the provided path and value.
  *
  * @param ly_ctx libyang context to use.
