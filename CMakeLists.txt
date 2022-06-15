@@ -6,13 +6,8 @@ include(GNUInstallDirs)
 SET(
     SRPC_SOURCES
 
-    src/srpc/node.c
     src/srpc/ly_tree.c
     src/srpc/common.c
-
-    src/srpc/node/any.c
-    src/srpc/node/basic.c
-    src/srpc/node/change.c
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules")
@@ -36,19 +31,10 @@ install(
 
 install(
     FILES
-        ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h
-        ${PROJECT_SOURCE_DIR}/src/srpc/common.h
-        ${PROJECT_SOURCE_DIR}/src/srpc/types.h
-        ${PROJECT_SOURCE_DIR}/src/srpc/node.h
+    ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h
+    ${PROJECT_SOURCE_DIR}/src/srpc/common.h
+    ${PROJECT_SOURCE_DIR}/src/srpc/types.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc
-)
-
-install(
-    FILES
-        ${PROJECT_SOURCE_DIR}/src/srpc/node/any.h
-        ${PROJECT_SOURCE_DIR}/src/srpc/node/basic.h
-        ${PROJECT_SOURCE_DIR}/src/srpc/node/change.h
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc/node
 )
 
 add_custom_target(uninstall COMMAND xargs rm < ${PROJECT_SOURCE_DIR}/build/install_manifest.txt)
