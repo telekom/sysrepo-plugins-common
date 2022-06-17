@@ -33,4 +33,14 @@ int srpc_check_empty_datastore(sr_session_ctx_t *session, const char *path, bool
  */
 int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpath, srpc_change_cb cb);
 
+/**
+ * Copy file from source to destination.
+ *
+ * @param source Source file path.
+ * @param destination Destination file path.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_copy_file(const char *source, const char *destination);
+
 #endif // SRPC_COMMON_H

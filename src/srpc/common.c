@@ -1,6 +1,9 @@
 #include <srpc/common.h>
 #include <sysrepo.h>
 
+#include <fcntl.h>
+#include <sys/sendfile.h>
+
 /**
  * Check wether the datastore contains any data or not based on the provided path to check.
  *
@@ -95,4 +98,61 @@ out:
     sr_free_change_iter(changes_iterator);
 
     return 0;
+}
+
+/**
+ * Copy file from source to destination.
+ *
+ * @param source Source file path.
+ * @param destination Destination file path.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_copy_file(const char *source, const char *destination)
+{
+    int error = 0;
+    int read_fd = -1;
+    int write_fd = -1;
+    struct stat stat_buf = {0};
+    off_t offset = 0;
+
+    read_fd = open(source, O_RDONLY);
+    if (read_fd == -1)
+    {
+        goto error_out;
+    }
+
+    if (fstat(read_fd, &stat_buf) != 0)
+    {
+        goto error_out;
+    }
+
+    write_fd = open(destination, O_CREAT | O_WRONLY | O_TRUNC, stat_buf.st_mode);
+    if (write_fd == -1)
+    {
+        goto error_out;
+    }
+
+    if (sendfile(write_fd, read_fd, &offset, (size_t)stat_buf.st_size) == -1)
+    {
+        goto error_out;
+    }
+
+    goto out;
+
+error_out:
+    error = -1;
+
+out:
+    if (read_fd != -1)
+    {
+        close(read_fd);
+    }
+
+    if (write_fd != -1)
+    {
+        close(write_fd);
+    }
+
+    return error;
 }
