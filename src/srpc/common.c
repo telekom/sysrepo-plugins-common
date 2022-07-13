@@ -1,3 +1,5 @@
+#include "libyang/context.h"
+#include "libyang/log.h"
 #include <srpc/common.h>
 #include <sysrepo.h>
 
@@ -152,6 +154,62 @@ out:
     if (write_fd != -1)
     {
         close(write_fd);
+    }
+
+    return error;
+}
+
+/**
+ * Get information about a feature from the current session.
+ *
+ * @param session Sysrepo session.
+ * @param module YANG module to use.
+ * @param feature Feature in the YANG module.
+ * @param enabled Set wether the feature is enabled or not.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_check_feature_status(sr_session_ctx_t *session, const char *module, const char *feature, bool *enabled)
+{
+    int error = 0;
+    const struct ly_ctx *ly_ctx = NULL;
+    const struct lys_module *ly_mod = NULL;
+    sr_conn_ctx_t *conn_ctx;
+
+    conn_ctx = sr_session_get_connection(session);
+    if (!conn_ctx)
+    {
+        goto error_out;
+    }
+
+    ly_ctx = sr_acquire_context(conn_ctx);
+    if (!ly_ctx)
+    {
+        goto error_out;
+    }
+
+    ly_mod = ly_ctx_get_module_latest(ly_ctx, module);
+    if (!ly_mod)
+    {
+        goto error_out;
+    }
+
+    if (lys_feature_value(ly_mod, feature) == LY_SUCCESS)
+    {
+        *enabled = true;
+    }
+    else
+    {
+        *enabled = false;
+    }
+
+error_out:
+    error = -1;
+
+out:
+    if (conn_ctx)
+    {
+        sr_release_context(conn_ctx);
     }
 
     return error;

@@ -43,4 +43,16 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
  */
 int srpc_copy_file(const char *source, const char *destination);
 
+/**
+ * Get information about a feature from the current session.
+ *
+ * @param session Sysrepo session.
+ * @param module YANG module to use.
+ * @param feature Feature in the YANG module.
+ * @param enabled Set wether the feature is enabled or not.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_check_feature_status(sr_session_ctx_t *session, const char *module, const char *feature, bool *enabled);
+
 #endif // SRPC_COMMON_H
