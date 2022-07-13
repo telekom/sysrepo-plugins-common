@@ -1,7 +1,16 @@
 /**
  * @file ly_tree.h
  * @brief libyang tree creation API
+ *
+ * Copyright (c) 2022 Sartura Ltd.
+ *
+ * This source code is licensed under BSD 3-Clause License (the "License").
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://opensource.org/licenses/BSD-3-Clause
  */
+
 #ifndef SRPC_LY_TREE_H
 #define SRPC_LY_TREE_H
 
