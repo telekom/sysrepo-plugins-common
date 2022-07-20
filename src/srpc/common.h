@@ -18,6 +18,24 @@
 
 #include <stdbool.h>
 #include <sysrepo_types.h>
+#include <sysrepo.h>
+
+/**
+ * Safely call a function and jump to an error point if and error occurs.
+ *
+ * @param func_call Written function call like printf("Hello World").
+ * @param jump_point Where to jump using goto if an error occurs.
+ *
+ */
+#define SRPC_SAFE_CALL(func_call, jump_point)                                                                          \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if ((error = func_call) != 0)                                                                                  \
+        {                                                                                                              \
+            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, error);                  \
+            goto jump_point;                                                                                           \
+        }                                                                                                              \
+    } while (0)
 
 /**
  * Check wether the datastore contains any data or not based on the provided path to check.
