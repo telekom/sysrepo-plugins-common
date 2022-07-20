@@ -211,6 +211,8 @@ int srpc_check_feature_status(sr_session_ctx_t *session, const char *module, con
         *enabled = false;
     }
 
+    goto out;
+
 error_out:
     error = -1;
 
