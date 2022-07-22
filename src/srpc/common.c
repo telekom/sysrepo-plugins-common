@@ -107,7 +107,7 @@ out:
     // free iterator data
     sr_free_change_iter(changes_iterator);
 
-    return 0;
+    return error;
 }
 
 /**
