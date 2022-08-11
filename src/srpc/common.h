@@ -21,7 +21,7 @@
 #include <sysrepo.h>
 
 /**
- * Safely call a function and jump to an error point if and error occurs.
+ * Safely call a function and jump to an error point if and error occurs - uses assumed variable name "error".
  *
  * @param func_call Written function call like printf("Hello World").
  * @param jump_point Where to jump using goto if an error occurs.
@@ -49,6 +49,24 @@
     do                                                                                                                 \
     {                                                                                                                  \
         if ((ptr_var = func_call) == NULL)                                                                             \
+        {                                                                                                              \
+            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (NULL)", __FILE__, __LINE__, #func_call);                       \
+            goto jump_point;                                                                                           \
+        }                                                                                                              \
+    } while (0)
+
+/**
+ * Safely call a function and jump to an error point if and error occurs - checks for returned error code to be 0.
+ *
+ * @param err_var Int error code variable to be set to the function return.
+ * @param func_call Written function call like printf("Hello World").
+ * @param jump_point Where to jump using goto if an error occurs.
+ *
+ */
+#define SRPC_SAFE_CALL_ERR(err_var, func_call, jump_point)                                                             \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if ((err_var = func_call) != 0)                                                                                \
         {                                                                                                              \
             SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (NULL)", __FILE__, __LINE__, #func_call);                       \
             goto jump_point;                                                                                           \
