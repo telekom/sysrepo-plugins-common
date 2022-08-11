@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Sartura Ltd.
+ * Copyright (c) 2022 Deutsche Telekom AG.
  *
  * This source code is licensed under BSD 3-Clause License (the "License").
  * You may not use this file except in compliance with the License.
