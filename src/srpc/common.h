@@ -68,7 +68,7 @@
     {                                                                                                                  \
         if ((err_var = func_call) != 0)                                                                                \
         {                                                                                                              \
-            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (NULL)", __FILE__, __LINE__, #func_call);                       \
+            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);                \
             goto jump_point;                                                                                           \
         }                                                                                                              \
     } while (0)
