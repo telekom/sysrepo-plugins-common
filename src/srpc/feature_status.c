@@ -9,7 +9,14 @@
  */
 
 #include "feature_status.h"
+#include "common.h"
+
+#include <stdlib.h>
+#include <string.h>
 #include <uthash.h>
+
+#include <sysrepo.h>
+#include <libyang/libyang.h>
 
 /**
  * Single feature status hash element.
@@ -44,6 +51,77 @@ srpc_feature_status_t *srpc_feature_status_hash_init()
 int srpc_feature_status_hash_load(srpc_feature_status_t *fs_hash, sr_session_ctx_t *session, const char *module)
 {
     int error = 0;
+    sr_conn_ctx_t *conn_ctx;
+    const struct ly_ctx *ly_ctx = NULL;
+    const struct lys_module *ly_mod = NULL;
+    const struct lysp_module *pmod = NULL;
+    struct lysp_feature *feature_iter = NULL;
+
+    uint32_t idx = 0;
+
+    conn_ctx = sr_session_get_connection(session);
+    if (!conn_ctx)
+    {
+        goto error_out;
+    }
+
+    ly_ctx = sr_acquire_context(conn_ctx);
+    if (!ly_ctx)
+    {
+        goto error_out;
+    }
+
+    ly_mod = ly_ctx_get_module_latest(ly_ctx, module);
+    if (!ly_mod)
+    {
+        goto error_out;
+    }
+
+    pmod = ly_mod->parsed;
+    feature_iter = lysp_feature_next(NULL, pmod, &idx);
+    while (feature_iter)
+    {
+        const char *feature = feature_iter->name;
+
+        srpc_feature_status_t *new_fs = malloc(sizeof(srpc_feature_status_t));
+        if (!new_fs)
+        {
+            goto error_out;
+        }
+
+        new_fs->id = strdup(feature);
+        if (!new_fs->id)
+        {
+            goto error_out;
+        }
+
+        if (lys_feature_value(ly_mod, feature) == LY_SUCCESS)
+        {
+            // add hash node - enabled
+            new_fs->enabled = 1;
+        }
+        else
+        {
+            // add hash node - disabled
+            new_fs->enabled = 0;
+        }
+
+        // add hash
+        HASH_ADD_STR(fs_hash, id, new_fs);
+
+        feature_iter = lysp_feature_next(feature_iter, pmod, &idx);
+    }
+
+    goto out;
+
+error_out:
+    error = -1;
+
+out:
+    if (conn_ctx)
+    {
+        sr_release_context(conn_ctx);
+    }
 
     return error;
 }
@@ -73,9 +151,21 @@ uint8_t srpc_feature_status_hash_check(srpc_feature_status_t *fs_hash, const cha
 /**
  * Free all hash data.
  *
- * @param fs Feature status hash data structure.
+ * @param fs_hash Feature status hash data structure.
  *
  */
-void srpc_feature_status_hash_free(srpc_feature_status_t *fs)
+void srpc_feature_status_hash_free(srpc_feature_status_t *fs_hash)
 {
+    srpc_feature_status_t *current = NULL, *tmp = NULL;
+
+    HASH_ITER(hh, fs_hash, current, tmp)
+    {
+        HASH_DEL(fs_hash, current);
+
+        // free data
+        free((char *)current->id);
+
+        // free allocated struct
+        free(current);
+    }
 }

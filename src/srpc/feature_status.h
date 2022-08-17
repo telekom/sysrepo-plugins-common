@@ -48,9 +48,9 @@ uint8_t srpc_feature_status_hash_check(srpc_feature_status_t *fs_hash, const cha
 /**
  * Free all hash data.
  *
- * @param fs Feature status hash data structure.
+ * @param fs_hash Feature status hash data structure.
  *
  */
-void srpc_feature_status_hash_free(srpc_feature_status_t *fs);
+void srpc_feature_status_hash_free(srpc_feature_status_t *fs_hash);
 
 #endif // SRPC_FEATURE_STATUS_H
