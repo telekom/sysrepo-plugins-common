@@ -15,6 +15,7 @@
 
 #include <srpc/types.h>
 #include <srpc/common.h>
+#include <srpc/feature_status.h>
 #include <srpc/ly_tree.h>
 
 #endif // SRPC_H

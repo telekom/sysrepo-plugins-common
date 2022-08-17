@@ -33,7 +33,7 @@ struct srpc_feature_status_s
  *
  * @return New feature status hash data structure.
  */
-srpc_feature_status_t *srpc_feature_status_hash_init()
+srpc_feature_status_t *srpc_feature_status_hash_init(void)
 {
     // must first be initialized to NULL
     return NULL;
@@ -48,7 +48,7 @@ srpc_feature_status_t *srpc_feature_status_hash_init()
  *
  * @return Error code - 0 on success.
  */
-int srpc_feature_status_hash_load(srpc_feature_status_t *fs_hash, sr_session_ctx_t *session, const char *module)
+int srpc_feature_status_hash_load(srpc_feature_status_t **fs_hash, sr_session_ctx_t *session, const char *module)
 {
     int error = 0;
     sr_conn_ctx_t *conn_ctx;
@@ -107,7 +107,7 @@ int srpc_feature_status_hash_load(srpc_feature_status_t *fs_hash, sr_session_ctx
         }
 
         // add hash
-        HASH_ADD_STR(fs_hash, id, new_fs);
+        HASH_ADD_STR(*fs_hash, id, new_fs);
 
         feature_iter = lysp_feature_next(feature_iter, pmod, &idx);
     }
@@ -134,7 +134,7 @@ out:
  *
  * @return Wether the feature is enabled (1) or disabled/not found (0).
  */
-uint8_t srpc_feature_status_hash_check(srpc_feature_status_t *fs_hash, const char *feature)
+uint8_t srpc_feature_status_hash_check(const srpc_feature_status_t *fs_hash, const char *feature)
 {
     srpc_feature_status_t *fs = NULL;
 
@@ -154,13 +154,13 @@ uint8_t srpc_feature_status_hash_check(srpc_feature_status_t *fs_hash, const cha
  * @param fs_hash Feature status hash data structure.
  *
  */
-void srpc_feature_status_hash_free(srpc_feature_status_t *fs_hash)
+void srpc_feature_status_hash_free(srpc_feature_status_t **fs_hash)
 {
     srpc_feature_status_t *current = NULL, *tmp = NULL;
 
-    HASH_ITER(hh, fs_hash, current, tmp)
+    HASH_ITER(hh, *fs_hash, current, tmp)
     {
-        HASH_DEL(fs_hash, current);
+        HASH_DEL(*fs_hash, current);
 
         // free data
         free((char *)current->id);

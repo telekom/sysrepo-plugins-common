@@ -8,6 +8,7 @@ SET(
 
     src/srpc/ly_tree.c
     src/srpc/common.c
+    src/srpc/feature_status.c
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules")
@@ -34,6 +35,7 @@ install(
     FILES
     ${PROJECT_SOURCE_DIR}/src/srpc/ly_tree.h
     ${PROJECT_SOURCE_DIR}/src/srpc/common.h
+    ${PROJECT_SOURCE_DIR}/src/srpc/feature_status.h
     ${PROJECT_SOURCE_DIR}/src/srpc/types.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpc
 )
