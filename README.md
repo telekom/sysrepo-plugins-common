@@ -6,6 +6,8 @@ Use the following set of commands to build the project:
 ```sh
 git clone https://github.com/sartura/sysrepo-plugins-common.git
 cd sysrepo-plugins-common
+git submodule init
+git submodule update
 mkdir build; cd build
 cmake .. # setup CMAKE_INSTALL_PREFIX if needed
 make -j
