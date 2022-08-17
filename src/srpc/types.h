@@ -25,6 +25,7 @@ typedef struct srpc_startup_store_s srpc_startup_store_t;
 typedef struct srpc_node_s srpc_node_t;
 typedef struct srpc_change_ctx_s srpc_change_ctx_t;
 typedef struct srpc_key_value_pair_s srpc_key_value_pair_t;
+typedef struct srpc_feature_status_s srpc_feature_status_t;
 typedef enum srpc_check_status_e srpc_check_status_t;
 typedef enum srpc_any_node_kind_e srpc_any_node_kind_t;
 

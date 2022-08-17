@@ -15,6 +15,7 @@ find_package(LIBYANG REQUIRED)
 find_package(SYSREPO REQUIRED)
 
 include_directories(src)
+include_directories(deps/uthash/include)
 include_directories(${LIBYANG_INCLUDE_DIRS})
 include_directories(${SYSREPO_INCLUDE_DIRS})
 
