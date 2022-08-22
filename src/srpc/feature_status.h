@@ -22,7 +22,7 @@
  *
  * @return New feature status hash data structure.
  */
-srpc_feature_status_t *srpc_feature_status_hash_init(void);
+srpc_feature_status_t *srpc_feature_status_hash_new(void);
 
 /**
  * Load feature status values for each feature found in the provided session and needed module.

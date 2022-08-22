@@ -33,7 +33,7 @@ struct srpc_feature_status_s
  *
  * @return New feature status hash data structure.
  */
-srpc_feature_status_t *srpc_feature_status_hash_init(void)
+srpc_feature_status_t *srpc_feature_status_hash_new(void)
 {
     // must first be initialized to NULL
     return NULL;
