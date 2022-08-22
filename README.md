@@ -4,7 +4,7 @@ Set of utilities/functionalities which can be used for easier build of sysrepo p
 # Build
 Use the following set of commands to build the project:
 ```sh
-git clone https://github.com/sartura/sysrepo-plugins-common.git
+git clone https://github.com/telekom/sysrepo-plugins-common.git
 cd sysrepo-plugins-common
 git submodule init
 git submodule update
