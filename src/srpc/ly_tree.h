@@ -18,19 +18,6 @@
 #include <libyang/libyang.h>
 
 /**
- * Create a container node inside of the parent node using the provided path.
- *
- * @param ly_ctx libyang context to use.
- * @param parent Parent node to add the child container to.
- * @param store  Variable to which the created container will be stored.
- * @param path Path of the node to create.
- *
- * @return Error code - 0 on success.
- */
-int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
-                                  const char *path);
-
-/**
  * Generic child search.
  *
  * @param node Node to search.
@@ -108,6 +95,19 @@ struct lyd_node *srpc_ly_tree_get_leaf_list_next(const struct lyd_node *node);
  * @return Child node, NULL if not found.
  */
 struct lyd_node *srpc_ly_tree_get_child_choice(const struct lyd_node *node, const char *name);
+
+/**
+ * Create a container node inside of the parent node using the provided path.
+ *
+ * @param ly_ctx libyang context to use.
+ * @param parent Parent node to add the child container to.
+ * @param store  Variable to which the created container will be stored.
+ * @param path Path of the node to create.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
+                                  const char *path);
 
 /**
  * Create a list node inside of the parent node using the provided path, key and its value.

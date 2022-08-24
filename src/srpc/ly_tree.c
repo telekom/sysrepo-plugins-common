@@ -11,30 +11,6 @@
 #include <srpc/ly_tree.h>
 
 /**
- * Create a container node inside of the parent node using the provided path.
- *
- * @param ly_ctx libyang context to use.
- * @param parent Parent node to add the child container to.
- * @param store  Variable to which the created container will be stored.
- * @param path Path of the node to create.
- *
- * @return Error code - 0 on success.
- */
-int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
-                                  const char *path)
-{
-    LY_ERR ly_error = LY_SUCCESS;
-
-    ly_error = lyd_new_path(parent, ly_ctx, path, NULL, 0, store);
-    if (ly_error != LY_SUCCESS)
-    {
-        return -1;
-    }
-
-    return 0;
-}
-
-/**
  * Generic child search.
  *
  * @param node Node to search.
@@ -175,6 +151,30 @@ struct lyd_node *srpc_ly_tree_get_child_choice(const struct lyd_node *node, cons
 }
 
 /**
+ * Create a container node inside of the parent node using the provided path.
+ *
+ * @param ly_ctx libyang context to use.
+ * @param parent Parent node to add the child container to.
+ * @param store  Variable to which the created container will be stored.
+ * @param path Path of the node to create.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
+                                  const char *path)
+{
+    LY_ERR ly_error = LY_SUCCESS;
+
+    ly_error = lyd_new_path(parent, ly_ctx, path, NULL, 0, store);
+    if (ly_error != LY_SUCCESS)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
+/**
  * Create a list node inside of the parent node using the provided path, key and its value.
  *
  * @param ly_ctx libyang context to use.
@@ -227,6 +227,10 @@ int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *
     int rc = 0;
 
     rc = snprintf(path_buffer, sizeof(path_buffer), "%s", path);
+    if (rc < 0)
+    {
+        return -1;
+    }
 
     for (int i = 0; i < keys_count; i++)
     {
@@ -242,7 +246,7 @@ int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *
     ly_error = lyd_new_path(parent, ly_ctx, path_buffer, NULL, 0, store);
     if (ly_error != LY_SUCCESS)
     {
-        return -1;
+        return -2;
     }
 
     return 0;
