@@ -74,6 +74,26 @@
     } while (0)
 
 /**
+ * Safely call a function and jump to an error point if and error occurs - checks for returned error code to be 0.
+ *
+ * @param err_var Int error code variable to be set to the function return.
+ * @param cond Error condition.
+ * @param func_call Written function call like printf("Hello World").
+ * @param jump_point Where to jump using goto if an error occurs.
+ *
+ */
+#define SRPC_SAFE_CALL_ERR_COND(err_var, cond, func_call, jump_point)                                                  \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        err_var = func_call;                                                                                           \
+        if (cond)                                                                                                      \
+        {                                                                                                              \
+            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);                \
+            goto jump_point;                                                                                           \
+        }                                                                                                              \
+    } while (0)
+
+/**
  * Check wether the datastore contains any data or not based on the provided path to check.
  *
  * @param session Sysrepo session to the datastore to check.
