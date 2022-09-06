@@ -62,32 +62,43 @@ out:
  * @param session Sysrepo session to use for iteration.
  * @param xpath XPath for the changes iterator.
  * @param cb Callback to call on each change.
+ * @param init_cb Callback for changes data initialization - can be NULL if no data is needed.
+ * @param free_cb Callback for freeing changes data - can be NULL if no data is allocated during init.
  *
  * @return Error code - 0 on success.
  */
-int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpath, srpc_change_cb cb)
+int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpath, srpc_change_cb cb,
+                         srpc_change_init_cb init_cb, srpc_change_free_cb free_cb)
 {
     int error = 0;
 
     // sysrepo
     sr_change_iter_t *changes_iterator = NULL;
-    sr_change_oper_t operation = SR_OP_CREATED;
-    const char *prev_value = NULL, *prev_list = NULL;
-    int prev_default;
 
     srpc_change_ctx_t change_ctx;
 
     // libyang
     const struct lyd_node *node = NULL;
 
+    // initialize changes data
+    if (init_cb)
+    {
+        error = init_cb(priv);
+        if (error)
+        {
+            error = 1;
+            goto out;
+        }
+    }
+
     error = sr_get_changes_iter(session, xpath, &changes_iterator);
     if (error != SR_ERR_OK)
     {
-        error = -1;
+        error = 2;
         goto out;
     }
 
-    int counter = 2;
+    int counter = 1;
 
     while (sr_get_change_tree_next(session, changes_iterator, &change_ctx.operation, &change_ctx.node,
                                    &change_ctx.previous_value, &change_ctx.previous_list,
@@ -104,6 +115,12 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
     }
 
 out:
+    // free allocated changes data
+    if (free_cb)
+    {
+        free_cb(priv);
+    }
+
     // free iterator data
     sr_free_change_iter(changes_iterator);
 

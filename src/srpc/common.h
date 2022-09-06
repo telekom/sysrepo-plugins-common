@@ -91,10 +91,13 @@ int srpc_check_empty_datastore(sr_session_ctx_t *session, const char *path, bool
  * @param session Sysrepo session to use for iteration.
  * @param xpath XPath for the changes iterator.
  * @param cb Callback to call on each change.
+ * @param init_cb Callback for changes data initialization - can be NULL if no data is needed.
+ * @param free_cb Callback for freeing changes data - can be NULL if no data is allocated during init.
  *
  * @return Error code - 0 on success.
  */
-int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpath, srpc_change_cb cb);
+int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpath, srpc_change_cb cb,
+                         srpc_change_init_cb init_cb, srpc_change_free_cb free_cb);
 
 /**
  * Copy file from source to destination.

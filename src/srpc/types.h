@@ -65,6 +65,12 @@ typedef int (*srpc_startup_load_cb)(void *priv, sr_session_ctx_t *session, const
  * node. */
 typedef int (*srpc_startup_store_cb)(void *priv, const struct lyd_node *parent_node);
 
+/** Callback type for initializing changes callback data before iterating changes. */
+typedef int (*srpc_change_init_cb)(void *priv);
+
+/** Callback type for freeing changes callback data after iterating changes. */
+typedef void (*srpc_change_free_cb)(void *priv);
+
 /** Callback type for applying changes when using sr_get_change_tree_next() functionality. */
 typedef int (*srpc_change_cb)(void *priv, sr_session_ctx_t *session, const srpc_change_ctx_t *change_ctx);
 
