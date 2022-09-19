@@ -43,6 +43,7 @@ struct srpc_module_change_s
  */
 struct srpc_operational_s
 {
+    const char *module;      ///< Module to which to apply the callback to.
     const char *path;        ///< Path to which the callback will be applied.
     sr_oper_get_items_cb cb; ///< Operational callback.
 };
