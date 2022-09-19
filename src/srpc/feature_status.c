@@ -21,7 +21,7 @@
 /**
  * Single feature status hash element.
  */
-struct srpc_feature_status_s
+struct srpc_feature_status_hash_s
 {
     const char *id;    ///< Key - feature name.
     uint8_t enabled;   ///< Value of the feature - enabled or disabled.
@@ -33,7 +33,7 @@ struct srpc_feature_status_s
  *
  * @return New feature status hash data structure.
  */
-srpc_feature_status_t *srpc_feature_status_hash_new(void)
+srpc_feature_status_hash_t *srpc_feature_status_hash_new(void)
 {
     // must first be initialized to NULL
     return NULL;
@@ -48,7 +48,7 @@ srpc_feature_status_t *srpc_feature_status_hash_new(void)
  *
  * @return Error code - 0 on success.
  */
-int srpc_feature_status_hash_load(srpc_feature_status_t **fs_hash, sr_session_ctx_t *session, const char *module)
+int srpc_feature_status_hash_load(srpc_feature_status_hash_t **fs_hash, sr_session_ctx_t *session, const char *module)
 {
     int error = 0;
     sr_conn_ctx_t *conn_ctx;
@@ -83,7 +83,7 @@ int srpc_feature_status_hash_load(srpc_feature_status_t **fs_hash, sr_session_ct
     {
         const char *feature = feature_iter->name;
 
-        srpc_feature_status_t *new_fs = malloc(sizeof(srpc_feature_status_t));
+        srpc_feature_status_hash_t *new_fs = malloc(sizeof(srpc_feature_status_hash_t));
         if (!new_fs)
         {
             goto error_out;
@@ -134,9 +134,9 @@ out:
  *
  * @return Wether the feature is enabled (1) or disabled/not found (0).
  */
-uint8_t srpc_feature_status_hash_check(const srpc_feature_status_t *fs_hash, const char *feature)
+uint8_t srpc_feature_status_hash_check(const srpc_feature_status_hash_t *fs_hash, const char *feature)
 {
-    srpc_feature_status_t *fs = NULL;
+    srpc_feature_status_hash_t *fs = NULL;
 
     HASH_FIND_STR(fs_hash, feature, fs);
 
@@ -154,9 +154,9 @@ uint8_t srpc_feature_status_hash_check(const srpc_feature_status_t *fs_hash, con
  * @param fs_hash Feature status hash data structure.
  *
  */
-void srpc_feature_status_hash_free(srpc_feature_status_t **fs_hash)
+void srpc_feature_status_hash_free(srpc_feature_status_hash_t **fs_hash)
 {
-    srpc_feature_status_t *current = NULL, *tmp = NULL;
+    srpc_feature_status_hash_t *current = NULL, *tmp = NULL;
 
     HASH_ITER(hh, *fs_hash, current, tmp)
     {

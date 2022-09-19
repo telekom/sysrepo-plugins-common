@@ -22,7 +22,7 @@
  *
  * @return New feature status hash data structure.
  */
-srpc_feature_status_t *srpc_feature_status_hash_new(void);
+srpc_feature_status_hash_t *srpc_feature_status_hash_new(void);
 
 /**
  * Load feature status values for each feature found in the provided session and needed module.
@@ -33,7 +33,7 @@ srpc_feature_status_t *srpc_feature_status_hash_new(void);
  *
  * @return Error code - 0 on success.
  */
-int srpc_feature_status_hash_load(srpc_feature_status_t **fs_hash, sr_session_ctx_t *session, const char *module);
+int srpc_feature_status_hash_load(srpc_feature_status_hash_t **fs_hash, sr_session_ctx_t *session, const char *module);
 
 /**
  * Get feature value - enabled or disabled.
@@ -43,7 +43,7 @@ int srpc_feature_status_hash_load(srpc_feature_status_t **fs_hash, sr_session_ct
  *
  * @return Wether the feature is enabled (1) or disabled/not found (0).
  */
-uint8_t srpc_feature_status_hash_check(const srpc_feature_status_t *fs_hash, const char *feature);
+uint8_t srpc_feature_status_hash_check(const srpc_feature_status_hash_t *fs_hash, const char *feature);
 
 /**
  * Free all hash data.
@@ -51,6 +51,6 @@ uint8_t srpc_feature_status_hash_check(const srpc_feature_status_t *fs_hash, con
  * @param fs_hash Feature status hash data structure.
  *
  */
-void srpc_feature_status_hash_free(srpc_feature_status_t **fs_hash);
+void srpc_feature_status_hash_free(srpc_feature_status_hash_t **fs_hash);
 
 #endif // SRPC_FEATURE_STATUS_H
