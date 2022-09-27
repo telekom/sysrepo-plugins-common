@@ -3,6 +3,8 @@ project(srpc C)
 
 include(GNUInstallDirs)
 
+include(CompileOptions.cmake)
+
 SET(
     SRPC_SOURCES
 

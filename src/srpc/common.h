@@ -20,6 +20,9 @@
 #include <sysrepo_types.h>
 #include <sysrepo.h>
 
+// Library logger name.
+#define SRPC_PLUGIN_NAME "srpc"
+
 /**
  * Safely call a function and jump to an error point if and error occurs - uses assumed variable name "error".
  *
@@ -32,7 +35,7 @@
     {                                                                                                                  \
         if ((error = func_call) != 0)                                                                                  \
         {                                                                                                              \
-            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, error);                  \
+            SRPLG_LOG_ERR(SRPC_PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, error);             \
             goto jump_point;                                                                                           \
         }                                                                                                              \
     } while (0)
@@ -50,7 +53,7 @@
     {                                                                                                                  \
         if ((ptr_var = func_call) == NULL)                                                                             \
         {                                                                                                              \
-            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (NULL)", __FILE__, __LINE__, #func_call);                       \
+            SRPLG_LOG_ERR(SRPC_PLUGIN_NAME, "%s:%d %s error (NULL)", __FILE__, __LINE__, #func_call);                  \
             goto jump_point;                                                                                           \
         }                                                                                                              \
     } while (0)
@@ -68,7 +71,7 @@
     {                                                                                                                  \
         if ((err_var = func_call) != 0)                                                                                \
         {                                                                                                              \
-            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);                \
+            SRPLG_LOG_ERR(SRPC_PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);           \
             goto jump_point;                                                                                           \
         }                                                                                                              \
     } while (0)
@@ -88,7 +91,7 @@
         err_var = func_call;                                                                                           \
         if (cond)                                                                                                      \
         {                                                                                                              \
-            SRPLG_LOG_ERR(PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);                \
+            SRPLG_LOG_ERR(SRPC_PLUGIN_NAME, "%s:%d %s error (%d)", __FILE__, __LINE__, #func_call, err_var);           \
             goto jump_point;                                                                                           \
         }                                                                                                              \
     } while (0)
@@ -128,6 +131,20 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
  * @return Error code - 0 on success.
  */
 int srpc_copy_file(const char *source, const char *destination);
+
+/**
+ * Extract a key value from the given xpath and write it to the buffer.
+ *
+ * @param xpath XPath of the node.
+ * @param list List name.
+ * @param key Key name.
+ * @param buffer Buffer to which the key value will be written.
+ * @param buffer_size Size of the provided buffer.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_extract_xpath_key_value(const char *xpath, const char *list, const char *key, char *buffer,
+                                 size_t buffer_size);
 
 /**
  * Get information about a feature from the current session.

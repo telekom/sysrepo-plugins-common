@@ -10,6 +10,7 @@
 
 #include <srpc/common.h>
 #include <sysrepo.h>
+#include <sysrepo/xpath.h>
 
 #include <fcntl.h>
 #include <sys/sendfile.h>
@@ -76,9 +77,6 @@ int srpc_iterate_changes(void *priv, sr_session_ctx_t *session, const char *xpat
     sr_change_iter_t *changes_iterator = NULL;
 
     srpc_change_ctx_t change_ctx;
-
-    // libyang
-    const struct lyd_node *node = NULL;
 
     // initialize changes data
     if (init_cb)
@@ -179,6 +177,50 @@ out:
     if (write_fd != -1)
     {
         close(write_fd);
+    }
+
+    return error;
+}
+
+/**
+ * Extract a key value from the given xpath and write it to the buffer.
+ *
+ * @param xpath XPath of the node.
+ * @param list List name.
+ * @param key Key name.
+ * @param buffer Buffer to which the key value will be written.
+ * @param buffer_size Size of the provided buffer.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_extract_xpath_key_value(const char *xpath, const char *list, const char *key, char *buffer, size_t buffer_size)
+{
+    int error = 0;
+
+    const char *name = NULL;
+    char *xpath_copy = NULL;
+
+    sr_xpath_ctx_t xpath_ctx = {0};
+
+    // copy xpath due to changing it when using xpath_ctx from sysrepo
+    SRPC_SAFE_CALL_PTR(xpath_copy, strdup(xpath), error_out);
+
+    // extract key
+    SRPC_SAFE_CALL_PTR(name, sr_xpath_key_value(xpath_copy, list, key, &xpath_ctx), error_out);
+
+    // store to buffer
+    SRPC_SAFE_CALL_ERR_COND(error, error < 0, snprintf(buffer, buffer_size, "%s", name), error_out);
+
+    error = 0;
+    goto out;
+
+error_out:
+    error = -1;
+
+out:
+    if (xpath_copy)
+    {
+        free(xpath_copy);
     }
 
     return error;
