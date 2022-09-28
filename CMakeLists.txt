@@ -22,7 +22,7 @@ include_directories(deps/uthash/include)
 include_directories(${LIBYANG_INCLUDE_DIRS})
 include_directories(${SYSREPO_INCLUDE_DIRS})
 
-add_library(${PROJECT_NAME} ${SRPC_SOURCES})
+add_library(${PROJECT_NAME} SHARED ${SRPC_SOURCES})
 
 install(
     TARGETS ${PROJECT_NAME}
