@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(srpc C)
+project(srpc VERSION 0.1.0 LANGUAGES C)
 
 include(GNUInstallDirs)
 
@@ -23,6 +23,13 @@ include_directories(${LIBYANG_INCLUDE_DIRS})
 include_directories(${SYSREPO_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} SHARED ${SRPC_SOURCES})
+
+# project version
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
 
 install(
     TARGETS ${PROJECT_NAME}
