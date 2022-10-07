@@ -104,7 +104,7 @@ struct lyd_node *srpc_ly_tree_get_child_choice(const struct lyd_node *node, cons
  * @param store  Variable to which the created container will be stored.
  * @param path Path of the node to create.
  *
- * @return Error code - 0 on success.
+ * @return LY_ERR on error - 0 on success.
  */
 int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
                                   const char *path);
@@ -119,7 +119,7 @@ int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *
  * @param key Key of the list to set.
  * @param key_value Value of the key.
  *
- * @return Error code - 0 on success.
+ * @return Negative value or LY_ERR on error - 0 on success.
  */
 int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
                              const char *path, const char *key, const char *key_value);
@@ -148,7 +148,7 @@ int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *
  * @param path Path of the node to create.
  * @param value Value of the leaf node.
  *
- * @return Error code - 0 on success.
+ * @return LY_ERR on error - 0 on success.
  */
 int srpc_ly_tree_create_leaf(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
                              const char *path, const char *value);
@@ -163,7 +163,7 @@ int srpc_ly_tree_create_leaf(const struct ly_ctx *ly_ctx, struct lyd_node *paren
  * @param path Path of the node to create.
  * @param value Value of the leaf list node to append.
  *
- * @return Error code - 0 on success.
+ * @return LY_ERR on error - 0 on success.
  */
 int srpc_ly_tree_append_leaf_list(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
                                   const char *path, const char *value);
