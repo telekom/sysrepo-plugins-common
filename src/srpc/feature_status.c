@@ -127,6 +127,26 @@ out:
 }
 
 /**
+ * Reload already allocated feature status hash.
+ *
+ * @param fs_hash Initialized and loaded feature status hash data structure.
+ * @param session Sysrepo session.
+ * @param module Module to use for feature extraction.
+ *
+ * @return Error code - 0 on success.
+ */
+int srpc_feature_status_hash_reload(srpc_feature_status_hash_t **fs_hash, sr_session_ctx_t *session, const char *module)
+{
+    // free already allocated hash
+    srpc_feature_status_hash_free(fs_hash);
+
+    // allocate new hash
+    *fs_hash = srpc_feature_status_hash_new();
+
+    return srpc_feature_status_hash_load(fs_hash, session, module);
+}
+
+/**
  * Get feature value - enabled or disabled.
  *
  * @param fs_hash Feature status hash.

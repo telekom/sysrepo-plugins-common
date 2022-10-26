@@ -171,7 +171,7 @@ int srpc_ly_tree_create_container(const struct ly_ctx *ly_ctx, struct lyd_node *
         return (int)ly_error;
     }
 
-    return 0;
+    return LY_SUCCESS;
 }
 
 /**
@@ -203,7 +203,7 @@ int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *paren
         return (int)ly_error;
     }
 
-    return 0;
+    return LY_SUCCESS;
 }
 
 /**
@@ -232,14 +232,14 @@ int srpc_ly_tree_create_list_full(const struct ly_ctx *ly_ctx, struct lyd_node *
         return -1;
     }
 
-    for (int i = 0; i < keys_count; i++)
+    for (size_t i = 0; i < keys_count; i++)
     {
         next_ptr = path_buffer + rc;
-        rc = snprintf(next_ptr, sizeof(path_buffer) - (next_ptr - path_buffer), "[%s=\"%s\"]", kv_pairs[i].key,
-                      kv_pairs[i].value);
+        rc = snprintf(next_ptr, sizeof(path_buffer) - (unsigned long)(next_ptr - path_buffer), "[%s=\"%s\"]",
+                      kv_pairs[i].key, kv_pairs[i].value);
         if (rc < 0)
         {
-            return i;
+            return (int)i;
         }
     }
 

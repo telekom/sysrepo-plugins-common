@@ -146,16 +146,4 @@ int srpc_copy_file(const char *source, const char *destination);
 int srpc_extract_xpath_key_value(const char *xpath, const char *list, const char *key, char *buffer,
                                  size_t buffer_size);
 
-/**
- * Get information about a feature from the current session.
- *
- * @param session Sysrepo session.
- * @param module YANG module to use.
- * @param feature Feature in the YANG module.
- * @param enabled Set wether the feature is enabled or not.
- *
- * @return Error code - 0 on success.
- */
-int srpc_check_feature_status(sr_session_ctx_t *session, const char *module, const char *feature, bool *enabled);
-
 #endif // SRPC_COMMON_H
