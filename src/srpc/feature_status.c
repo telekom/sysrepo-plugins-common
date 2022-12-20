@@ -6,6 +6,12 @@
  * You may obtain a copy of the License at
  *
  *     https://opensource.org/licenses/BSD-3-Clause
+ *
+ * SPDX-FileCopyrightText: 2022 Deutsche Telekom AG
+ * SPDX-FileContributor: Sartura Ltd.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  */
 
 #include "feature_status.h"
