@@ -1,3 +1,17 @@
+#
+# Copyright (c) 2022 Deutsche Telekom AG.
+#
+# This source code is licensed under BSD 3-Clause License (the "License").
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://opensource.org/licenses/BSD-3-Clause
+#
+# SPDX-FileCopyrightText: 2022 Deutsche Telekom AG
+# SPDX-FileContributor: Sartura Ltd.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
 cmake_minimum_required(VERSION 3.0.0)
 project(srpc VERSION 0.1.0 LANGUAGES C)
 
