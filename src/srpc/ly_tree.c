@@ -228,12 +228,8 @@ int srpc_ly_tree_create_list_without_key(const struct ly_ctx *ly_ctx, struct lyd
     LY_ERR ly_error = LY_SUCCESS;
 
     ly_error = lyd_new_path(parent, ly_ctx, path, NULL, 0, store);
-    if (ly_error != LY_SUCCESS)
-    {
-        return (int)ly_error;
-    }
 
-    return LY_SUCCESS;
+    return (int)ly_error;
 }
 
 /**
