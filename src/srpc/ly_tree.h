@@ -131,6 +131,19 @@ int srpc_ly_tree_create_list(const struct ly_ctx *ly_ctx, struct lyd_node *paren
                              const char *path, const char *key, const char *key_value);
 
 /**
+ * Create a list node inside of the parent node using the provided path without a key.
+ *
+ * @param ly_ctx libyang context to use.
+ * @param parent Parent node to add the child container to.
+ * @param store  Variable to which the created container will be stored.
+ * @param path Path of the node to create.
+ *
+ * @return Negative value or LY_ERR on error - 0 on success.
+ */
+int srpc_ly_tree_create_list_without_key(const struct ly_ctx *ly_ctx, struct lyd_node *parent, struct lyd_node **store,
+                                         const char *path);
+
+/**
  * Create a list node based on all key value pairs.
  *
  * @param ly_ctx libyang context to use.
