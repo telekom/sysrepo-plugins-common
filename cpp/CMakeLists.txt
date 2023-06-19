@@ -58,6 +58,7 @@ install(
 
 install(
     FILES
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/common.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/callbacks.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module-registry.hpp
