@@ -52,15 +52,15 @@ install(
 )
 
 install(
-    FILES ${PROJECT_SOURCE_DIR}/src/cpp/srpcpp.hpp
+    FILES ${PROJECT_SOURCE_DIR}/src/srpcpp.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(
     FILES
-    src/srpcpp/callbacks.hpp
-    src/srpcpp/module.hpp
-    src/srpcpp/module-registry.hpp
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/callbacks.hpp
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/module.hpp
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/module-registry.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpcpp
 )
 
