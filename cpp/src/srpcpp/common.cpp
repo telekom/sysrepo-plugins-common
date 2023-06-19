@@ -2,7 +2,7 @@
 
 #include <regex>
 
-namespace ietf::sys
+namespace srpc
 {
 /**
  * @brief Extracts the key from the list XPath.
@@ -74,4 +74,4 @@ std::map<std::string, std::string> getMetaValuesHash(ly::MetaCollection meta)
     return hash;
 }
 
-} // namespace ietf::sys
+} // namespace srpc

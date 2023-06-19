@@ -8,17 +8,20 @@
 #include <list>
 #include <iostream>
 
+namespace srpc
+{
 using ModuleList = std::list<std::unique_ptr<IModule>>;
 
 /**
  * @brief Module registry. Singleton class for creating and getting modules.
  */
-class ModuleRegistry {
-public:
+class ModuleRegistry
+{
+  public:
     /**
      * Return the singleton instance of the class.
      */
-    static ModuleRegistry& getInstance()
+    static ModuleRegistry &getInstance()
     {
         static ModuleRegistry reg;
         return reg;
@@ -36,10 +39,15 @@ public:
     /**
      * Returns the list of registered modules.
      */
-    ModuleList& getRegisteredModules() { return m_modules; }
+    ModuleList &getRegisteredModules()
+    {
+        return m_modules;
+    }
 
-private:
+  private:
     ModuleRegistry() = default;
     ~ModuleRegistry() = default;
     ModuleList m_modules;
 };
+
+} // namespace srpc

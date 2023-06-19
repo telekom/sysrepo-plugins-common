@@ -4,6 +4,8 @@
 
 #include <list>
 
+namespace srpc
+{
 /**
  * @brief Context interface. Used for passing context to each callback.
  */
@@ -60,3 +62,4 @@ class IModule
     {
     }
 };
+} // namespace srpc

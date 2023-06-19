@@ -8,7 +8,7 @@
 
 namespace ly = libyang;
 
-namespace ietf::sys
+namespace srpc
 {
 
 /**
@@ -38,4 +38,4 @@ const std::string getMetaValue(ly::MetaCollection &meta, const std::string &name
  */
 std::map<std::string, std::string> getMetaValuesHash(ly::MetaCollection meta);
 
-} // namespace ietf::sys
+} // namespace srpc
