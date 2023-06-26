@@ -44,7 +44,7 @@ const std::string extractListKeyFromXPath(const std::string &list, const std::st
  * @param name Meta name.
  * @return std::string Meta value.
  */
-const std::string getMetaValue(ly::MetaCollection &meta, const std::string &name)
+const std::string getMetaValue(const ly::MetaCollection &meta, const std::string &name)
 {
     for (const auto &m : meta)
     {
@@ -62,7 +62,7 @@ const std::string getMetaValue(ly::MetaCollection &meta, const std::string &name
  * @param meta Meta collection object.
  * @return std::map<std::string, std::string> Meta values hash.
  */
-std::map<std::string, std::string> getMetaValuesHash(ly::MetaCollection meta)
+std::map<std::string, std::string> getMetaValuesHash(const ly::MetaCollection meta)
 {
     std::map<std::string, std::string> hash;
 
