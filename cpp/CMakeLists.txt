@@ -62,6 +62,7 @@ install(
     ${PROJECT_SOURCE_DIR}/src/srpcpp/callbacks.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module-registry.hpp
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/ds-check.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/srpcpp
 )
 
