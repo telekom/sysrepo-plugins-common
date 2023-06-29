@@ -1,6 +1,7 @@
 #pragma once
 
 #include "callbacks.hpp"
+#include "ds-check.hpp"
 
 #include <list>
 
@@ -49,6 +50,11 @@ class IModule
      * Get all RPC callbacks which the module should use.
      */
     virtual std::list<RpcCallback> getRpcCallbacks() = 0;
+
+    /**
+     * Get all system value checkers that this module provides.
+     */
+    virtual std::list<std::shared_ptr<DatastoreValuesChecker>> getValueCheckers() = 0;
 
     /**
      * Get module name.
