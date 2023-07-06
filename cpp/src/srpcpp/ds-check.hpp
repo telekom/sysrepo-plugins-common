@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sysrepo-cpp/Enum.hpp"
 #include <sysrepo-cpp/Session.hpp>
 
 namespace srpc
@@ -19,9 +20,16 @@ enum class DatastoreValuesCheckStatus
  * @brief Datastore values checking interface. Each class implementing this interface must check for datastore values on
  * the system and return the status code or throw an exception.
  */
-class DatastoreValuesChecker
+template <typename PluginContextType> class DatastoreValuesChecker
 {
   public:
+    /**
+     * @brief Default constructor.
+     */
+    DatastoreValuesChecker(PluginContextType &plugin_ctx) : m_pluginContext(plugin_ctx)
+    {
+    }
+
     /**
      * @brief Check for the datastore values on the system.
      *
@@ -30,5 +38,19 @@ class DatastoreValuesChecker
      * @return Enum describing the output of values comparison.
      */
     virtual DatastoreValuesCheckStatus checkValues(sysrepo::Session &session) = 0;
+
+    /**
+     * @brief Return the plugin context. Used for creating new sessions and accessing data in other datastores if
+     * needed.
+     *
+     * @return Plugin context.
+     */
+    PluginContextType &getPluginContext()
+    {
+        return m_pluginContext;
+    }
+
+  private:
+    PluginContextType &m_pluginContext;
 };
 } // namespace srpc

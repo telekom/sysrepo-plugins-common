@@ -13,7 +13,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 cmake_minimum_required(VERSION 3.0.0)
-project(srpcpp VERSION 0.1.0)
+project(srpcpp VERSION 1.0.0)
 
 include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 20)

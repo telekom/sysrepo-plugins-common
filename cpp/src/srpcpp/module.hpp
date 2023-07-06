@@ -18,9 +18,24 @@ class IModuleContext
  * @brief Module interface.
  * @brief Each module should define its own callbacks and its own modules to use as parameters to callback classes.
  */
-class IModule
+template <typename PluginContextType> class IModule
 {
   public:
+    /**
+     * Default constructor.
+     */
+    IModule(PluginContextType &plugin_ctx) : m_pluginContext(plugin_ctx)
+    {
+    }
+
+    /**
+     * Return the plugin context reference.
+     */
+    PluginContextType &getPluginContext()
+    {
+        return m_pluginContext;
+    }
+
     /**
      * Return the operational context from the module.
      */
@@ -54,7 +69,10 @@ class IModule
     /**
      * Get all system value checkers that this module provides.
      */
-    virtual std::list<std::shared_ptr<DatastoreValuesChecker>> getValueCheckers() = 0;
+    std::list<std::shared_ptr<DatastoreValuesChecker<PluginContextType>>> getValueCheckers()
+    {
+        return m_checkers;
+    }
 
     /**
      * Get module name.
@@ -67,5 +85,20 @@ class IModule
     virtual ~IModule()
     {
     }
+
+  protected:
+    /**
+     * @brief Add a value checker to the module.
+     *
+     * @param checker Pointer to the value checker to add.
+     */
+    template <typename CheckerType> void addValueChecker()
+    {
+        m_checkers.push_back(std::make_shared<CheckerType>(m_pluginContext));
+    }
+
+  private:
+    std::list<std::shared_ptr<DatastoreValuesChecker<PluginContextType>>> m_checkers; ///< Plugin data checkers.
+    PluginContextType &m_pluginContext; ///< Plugin context used to share data between different parts of the module.
 };
 } // namespace srpc
