@@ -13,7 +13,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 cmake_minimum_required(VERSION 3.0.0)
-project(srpcpp VERSION 1.0.0)
+project(srpcpp VERSION 1.1.0)
 
 include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 20)
@@ -22,6 +22,7 @@ SET(
     SRPCPP_SOURCES
 
     src/srpcpp/common.cpp
+    src/srpcpp/context.cpp
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../CMakeModules")
@@ -59,6 +60,7 @@ install(
 install(
     FILES
     ${PROJECT_SOURCE_DIR}/src/srpcpp/common.hpp
+    ${PROJECT_SOURCE_DIR}/src/srpcpp/context.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/callbacks.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module.hpp
     ${PROJECT_SOURCE_DIR}/src/srpcpp/module-registry.hpp

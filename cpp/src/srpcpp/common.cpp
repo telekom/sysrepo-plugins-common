@@ -73,5 +73,4 @@ std::map<std::string, std::string> getMetaValuesHash(const ly::MetaCollection me
 
     return hash;
 }
-
 } // namespace srpc
