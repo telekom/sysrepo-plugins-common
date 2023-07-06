@@ -40,6 +40,13 @@ template <typename PluginContextType> class DatastoreValuesChecker
     virtual DatastoreValuesCheckStatus checkValues(sysrepo::Session &session) = 0;
 
     /**
+     * @brief Get the paths which the checker is assigned for.
+     *
+     * @return Checker paths.
+     */
+    virtual std::list<std::string> getPaths() = 0;
+
+    /**
      * @brief Return the plugin context. Used for creating new sessions and accessing data in other datastores if
      * needed.
      *
