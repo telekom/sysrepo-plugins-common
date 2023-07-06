@@ -2,6 +2,7 @@
 
 #include "callbacks.hpp"
 #include "ds-check.hpp"
+#include "context.hpp"
 
 #include <list>
 
@@ -18,7 +19,7 @@ class IModuleContext
  * @brief Module interface.
  * @brief Each module should define its own callbacks and its own modules to use as parameters to callback classes.
  */
-template <typename PluginContextType> class IModule
+template <PluginContext PluginContextType> class IModule
 {
   public:
     /**
@@ -101,4 +102,10 @@ template <typename PluginContextType> class IModule
     std::list<std::shared_ptr<DatastoreValuesChecker<PluginContextType>>> m_checkers; ///< Plugin data checkers.
     PluginContextType &m_pluginContext; ///< Plugin context used to share data between different parts of the module.
 };
+
+/**
+ * @brief Module concept used for determining valid module type at compile time.
+ */
+template <typename T, typename PluginContextType>
+concept PluginModule = std::is_base_of<IModule<PluginContextType>, T>::value;
 } // namespace srpc
