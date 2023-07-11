@@ -1,7 +1,7 @@
 #pragma once
 
 #include "callbacks.hpp"
-#include "ds-check.hpp"
+#include "datastore.hpp"
 #include "context.hpp"
 
 #include <list>
@@ -68,11 +68,19 @@ template <PluginContext PluginContextType> class IModule
     virtual std::list<RpcCallback> getRpcCallbacks() = 0;
 
     /**
-     * Get all system value checkers that this module provides.
+     * Get all datastore value checkers that this module provides.
      */
-    std::list<std::shared_ptr<DatastoreValuesChecker<PluginContextType>>> getValueCheckers()
+    std::list<std::shared_ptr<IDatastoreChecker>> getValueCheckers()
     {
         return m_checkers;
+    }
+
+    /**
+     * Get all datastore value appliers that this module provides.
+     */
+    std::list<std::shared_ptr<IDatastoreApplier>> getValueAppliers()
+    {
+        return m_appliers;
     }
 
     /**
@@ -90,16 +98,23 @@ template <PluginContext PluginContextType> class IModule
   protected:
     /**
      * @brief Add a value checker to the module.
-     *
-     * @param checker Pointer to the value checker to add.
      */
-    template <typename CheckerType> void addValueChecker()
+    template <DatastoreValueChecker CheckerType> void addValueChecker()
     {
-        m_checkers.push_back(std::make_shared<CheckerType>(m_pluginContext));
+        m_checkers.push_back(std::make_shared<CheckerType>());
+    }
+
+    /**
+     * @brief Add a value applier to the module.
+     */
+    template <DatastoreValueApplier ApplierType> void addValueApplier()
+    {
+        m_appliers.push_back(std::make_shared<ApplierType>());
     }
 
   private:
-    std::list<std::shared_ptr<DatastoreValuesChecker<PluginContextType>>> m_checkers; ///< Plugin data checkers.
+    std::list<std::shared_ptr<IDatastoreChecker>> m_checkers; ///< Plugin data checkers.
+    std::list<std::shared_ptr<IDatastoreApplier>> m_appliers; ///< Plugin datastore data appliers.
     PluginContextType &m_pluginContext; ///< Plugin context used to share data between different parts of the module.
 };
 
