@@ -64,11 +64,11 @@ void registerOperationalSubscriptions(sysrepo::Session &sess, PluginContextType 
         SRPLG_LOG_INF(ctx.getPluginName(), "Creating operational subscription for xpath %s", cb.XPath.c_str());
         if (sub_handle.has_value())
         {
-            sub_handle->onOperGet("ietf-system", cb.Callback, cb.XPath);
+            sub_handle->onOperGet(cb.Module, cb.Callback, cb.XPath);
         }
         else
         {
-            sub_handle = sess.onOperGet("ietf-system", cb.Callback, cb.XPath);
+            sub_handle = sess.onOperGet(cb.Module, cb.Callback, cb.XPath);
         }
     }
 }
@@ -94,11 +94,11 @@ void registerModuleChangeSubscriptions(sysrepo::Session &sess, PluginContextType
         SRPLG_LOG_INF(ctx.getPluginName(), "Creating module change subscription for xpath %s", cb.XPath.c_str());
         if (sub_handle.has_value())
         {
-            sub_handle->onModuleChange("ietf-system", cb.Callback, cb.XPath);
+            sub_handle->onModuleChange(cb.Module, cb.Callback, cb.XPath);
         }
         else
         {
-            sub_handle = sess.onModuleChange("ietf-system", cb.Callback, cb.XPath);
+            sub_handle = sess.onModuleChange(cb.Module, cb.Callback, cb.XPath);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace srpc
  */
 struct OperationalCallback
 {
+    std::string Module;          ///< Module for the callback.
     std::string XPath;           ///< XPath of the data.
     sysrepo::OperGetCb Callback; ///< Callback function.
 };
@@ -19,6 +20,7 @@ struct OperationalCallback
  */
 struct ModuleChangeCallback
 {
+    std::string Module;               ///< Module for the callback.
     std::string XPath;                ///< XPath of the data.
     sysrepo::ModuleChangeCb Callback; ///< Callback function.
 };
