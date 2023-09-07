@@ -33,32 +33,20 @@
 int srpc_check_empty_datastore(sr_session_ctx_t *session, const char *path, bool *empty)
 {
     int error = 0;
-    bool is_empty = true;
-    sr_val_t *values = NULL;
-    size_t value_cnt = 0;
+    sr_data_t *test_data = NULL;
 
-    error = sr_get_items(session, path, 0, SR_OPER_DEFAULT, &values, &value_cnt);
-    if (error)
-    {
-        goto error_out;
+    *empty = true;
+
+    SRPC_SAFE_CALL_ERR(error, sr_get_subtree(session, path, 0, &test_data), out);
+
+    if (test_data && test_data->tree != NULL && lyd_child(test_data->tree) != NULL) {
+        // main container found: datastore is not empty
+        *empty = false;
     }
-
-    if (value_cnt > 0)
-    {
-        is_empty = false;
-
-        // free recieved values
-        sr_free_values(values, value_cnt);
-    }
-
-    *empty = is_empty;
-
-    goto out;
-
-error_out:
-    error = -1;
 
 out:
+    sr_release_data(test_data);
+
     return error;
 }
 
