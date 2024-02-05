@@ -27,6 +27,15 @@ namespace srpc
 const std::string extractListKeyFromXPath(const std::string &list, const std::string &key, const std::string &xpath);
 
 /**
+ * @brief Extracts all the keys from the list XPath by list name.
+ *
+ * @param list List name.
+ * @param xpath XPath of the list.
+ * @return std::unordered_map<std::string, std::string> Key values.
+ */
+std::unordered_map<std::string, std::string> extractListKeysFromXpath(const std::string& list, const std::string& xpath);
+
+/**
  * @brief Get meta value.
  *
  * @param meta Meta collection object.
