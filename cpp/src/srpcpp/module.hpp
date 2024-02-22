@@ -115,17 +115,17 @@ template <PluginContext PluginContextType> class IModule
     /**
      * @brief Add a value checker to the module.
      */
-    template <DatastoreValueChecker CheckerType> void addValueChecker()
+    template <DatastoreValueChecker CheckerType> void addValueChecker(std::shared_ptr<CheckerType>& checker)
     {
-        m_checkers.push_back(std::make_shared<CheckerType>());
+        m_checkers.push_back(checker);
     }
 
     /**
      * @brief Add a value applier to the module.
      */
-    template <DatastoreValueApplier ApplierType> void addValueApplier()
+    template <DatastoreValueApplier ApplierType> void addValueApplier(std::shared_ptr<ApplierType>& applier)
     {
-        m_appliers.push_back(std::make_shared<ApplierType>());
+        m_appliers.push_back(applier);
     }
 
   private:
