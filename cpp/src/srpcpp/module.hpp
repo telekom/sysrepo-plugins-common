@@ -68,6 +68,14 @@ template <PluginContext PluginContextType> class IModule
     virtual std::list<RpcCallback> getRpcCallbacks() = 0;
 
     /**
+     * Get all datastore initializers that this module provides.
+     */
+    std::list<std::shared_ptr<IDatastoreInitializer>> getDatastoreInitializers()
+    {
+        return m_datastore_initializers;
+    }
+
+    /**
      * Get all datastore value checkers that this module provides.
      */
     std::list<std::shared_ptr<IDatastoreChecker>> getValueCheckers()
@@ -97,6 +105,14 @@ template <PluginContext PluginContextType> class IModule
 
   protected:
     /**
+     * @brief Add a datastore initializer to the module.
+     */
+    template <DatastoreValueInitializer InitializerType> void addDatastoreInitializer()
+    {
+        m_datastore_initializers.push_back(std::make_shared<InitializerType>());
+    }
+
+    /**
      * @brief Add a value checker to the module.
      */
     template <DatastoreValueChecker CheckerType> void addValueChecker()
@@ -113,6 +129,7 @@ template <PluginContext PluginContextType> class IModule
     }
 
   private:
+    std::list<std::shared_ptr<IDatastoreInitializer>> m_datastore_initializers; ///< Plugin datastore initializers.
     std::list<std::shared_ptr<IDatastoreChecker>> m_checkers; ///< Plugin data checkers.
     std::list<std::shared_ptr<IDatastoreApplier>> m_appliers; ///< Plugin datastore data appliers.
     PluginContextType &m_pluginContext; ///< Plugin context used to share data between different parts of the module.
