@@ -107,9 +107,9 @@ template <PluginContext PluginContextType> class IModule
     /**
      * @brief Add a datastore initializer to the module.
      */
-    template <DatastoreValueInitializer InitializerType> void addDatastoreInitializer()
+    template <DatastoreValueInitializer InitializerType> void addDatastoreInitializer(std::shared_ptr<InitializerType>& initializer)
     {
-        m_datastore_initializers.push_back(std::make_shared<InitializerType>());
+        m_datastore_initializers.push_back(initializer);
     }
 
     /**
