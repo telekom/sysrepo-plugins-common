@@ -4,10 +4,21 @@
 
 namespace srpc
 {
+class IAssignedPaths
+{
+  public:
+    /**
+     * @brief Get the paths which the initializer/checker/applier is assigned for.
+     *
+     * @return Assigned paths.
+     */
+    virtual std::list<std::string> getPaths() = 0;
+};
+
 /**
  * @brief Interface used for applying datastore content to the system.
  */
-class IDatastoreInitializer
+class IDatastoreInitializer : public IAssignedPaths
 {
   public:
     /**
@@ -18,17 +29,6 @@ class IDatastoreInitializer
      * @param session Session to use for retreiving datastore data.
      */
     virtual void initializeDatastore(sysrepo::Session &session) = 0;
-};
-
-class IAssignedPaths
-{
-  public:
-    /**
-     * @brief Get the paths which the checker/applier is assigned for.
-     *
-     * @return Assigned paths.
-     */
-    virtual std::list<std::string> getPaths() = 0;
 };
 
 /**
