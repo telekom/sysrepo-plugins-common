@@ -38,21 +38,6 @@ template <PluginContext PluginContextType> class IModule
     }
 
     /**
-     * Return the operational context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getOperationalContext() = 0;
-
-    /**
-     * Return the module changes context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getModuleChangesContext() = 0;
-
-    /**
-     * Return the RPC context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getRpcContext() = 0;
-
-    /**
      * Get all operational callbacks which the module should use.
      */
     virtual std::list<OperationalCallback> getOperationalCallbacks() = 0;
