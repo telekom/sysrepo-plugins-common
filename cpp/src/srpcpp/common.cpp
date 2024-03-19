@@ -13,7 +13,7 @@ namespace srpc
  */
 static std::string EscapeForRegex(const std::string &s)
 {
-    static const std::regex meta_characters = (R"([-[\]{}()*+?.\^$|\s])");
+    static const std::regex meta_characters{R"([-[\]{}()*+?.\^$|\s])"};
     return std::regex_replace(s, meta_characters, R"(\$&)");
 }
 
