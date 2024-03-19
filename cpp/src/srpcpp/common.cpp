@@ -4,6 +4,19 @@
 
 namespace srpc
 {
+
+/**
+ * @brief Escape special characters in the incoming string so that it can be used in a regular expression.
+ *
+ * @param s Incoming string
+ * @return std::string Escaped string
+ */
+static std::string EscapeForRegex(const std::string &s)
+{
+    static const std::regex meta_characters = (R"([-[\]{}()*+?.\^$|\s])");
+    return std::regex_replace(s, meta_characters, R"(\$&)");
+}
+
 /**
  * @brief Extracts the key from the list XPath.
  *
@@ -18,7 +31,7 @@ const std::string extractListKeyFromXPath(const std::string &list, const std::st
 
     std::stringstream ss;
 
-    ss << list << "\\[" << key << "='([^']*)'\\]";
+    ss << EscapeForRegex(list) << "\\[" << key << "='([^']*)'\\]";
 
     const auto &xpath_expr = ss.str();
 
@@ -49,18 +62,18 @@ std::unordered_map<std::string, std::string> extractListKeysFromXpath(const std:
     std::unordered_map<std::string, std::string> keys_map;
 
     int starting_point = xpath.find(list + "[");
-    
+
     std::string chunk(xpath.begin() + starting_point, xpath.end());
-    
+
     int ending_point = chunk.find("]/");
 
     if(ending_point == std::string::npos){
         //this means it can be last
         ending_point = chunk.find_last_of(']');
     }
-    
+
     chunk.erase(chunk.begin() + ending_point + 1, chunk.end());
-    
+
     int begin = chunk.find('[');
     int end = chunk.find(']');
     // list is found, continue
