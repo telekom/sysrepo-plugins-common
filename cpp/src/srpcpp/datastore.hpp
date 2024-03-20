@@ -8,11 +8,27 @@ class IAssignedPaths
 {
   public:
     /**
-     * @brief Get the paths which the checker/applier is assigned for.
+     * @brief Get the paths which the initializer/checker/applier is assigned for.
      *
      * @return Assigned paths.
      */
     virtual std::list<std::string> getPaths() = 0;
+};
+
+/**
+ * @brief Interface used for applying datastore content to the system.
+ */
+class IDatastoreInitializer : public IAssignedPaths
+{
+  public:
+    /**
+     * @brief Initialize datastore content using the provided session.
+     *
+     * @note The datastore that's initialized is not necessarily the active datastore of @p session.
+     *
+     * @param session Session to use for retreiving datastore data.
+     */
+    virtual void initializeDatastore(sysrepo::Session &session) = 0;
 };
 
 /**
@@ -58,7 +74,13 @@ class IDatastoreChecker : public IAssignedPaths
 };
 
 /**
- * @brief Datastore checker concept for determining a valid datastore checker.
+ * @brief Datastore initializer concept for determining a valid datastore initializer.
+ */
+template <typename T>
+concept DatastoreValueInitializer = std::is_base_of<IDatastoreInitializer, T>::value;
+
+/**
+ * @brief Datastore applier concept for determining a valid datastore applier.
  */
 template <typename T>
 concept DatastoreValueApplier = std::is_base_of<IDatastoreApplier, T>::value;

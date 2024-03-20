@@ -31,9 +31,9 @@ template <PluginContext PluginContextType> class ModuleRegistry
     /**
      * Register a module.
      */
-    template <PluginModule<PluginContextType> ModuleType> size_t registerModule(PluginContextType &plugin_ctx)
+    template <PluginModule<PluginContextType> ModuleType> size_t registerModule(PluginContextType &plugin_ctx, const std::string &module_name)
     {
-        m_modules.push_back(std::make_unique<ModuleType>(plugin_ctx));
+        m_modules.push_back(std::make_unique<ModuleType>(plugin_ctx, module_name));
         return m_modules.size() - 1;
     }
 

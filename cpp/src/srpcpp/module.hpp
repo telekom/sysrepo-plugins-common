@@ -38,21 +38,6 @@ template <PluginContext PluginContextType> class IModule
     }
 
     /**
-     * Return the operational context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getOperationalContext() = 0;
-
-    /**
-     * Return the module changes context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getModuleChangesContext() = 0;
-
-    /**
-     * Return the RPC context from the module.
-     */
-    virtual std::shared_ptr<IModuleContext> getRpcContext() = 0;
-
-    /**
      * Get all operational callbacks which the module should use.
      */
     virtual std::list<OperationalCallback> getOperationalCallbacks() = 0;
@@ -66,6 +51,14 @@ template <PluginContext PluginContextType> class IModule
      * Get all RPC callbacks which the module should use.
      */
     virtual std::list<RpcCallback> getRpcCallbacks() = 0;
+
+    /**
+     * Get all datastore initializers that this module provides.
+     */
+    std::list<std::shared_ptr<IDatastoreInitializer>> getDatastoreInitializers()
+    {
+        return m_datastore_initializers;
+    }
 
     /**
      * Get all datastore value checkers that this module provides.
@@ -97,22 +90,31 @@ template <PluginContext PluginContextType> class IModule
 
   protected:
     /**
+     * @brief Add a datastore initializer to the module.
+     */
+    template <DatastoreValueInitializer InitializerType> void addDatastoreInitializer(std::shared_ptr<InitializerType>& initializer)
+    {
+        m_datastore_initializers.push_back(initializer);
+    }
+
+    /**
      * @brief Add a value checker to the module.
      */
-    template <DatastoreValueChecker CheckerType> void addValueChecker()
+    template <DatastoreValueChecker CheckerType> void addValueChecker(std::shared_ptr<CheckerType>& checker)
     {
-        m_checkers.push_back(std::make_shared<CheckerType>());
+        m_checkers.push_back(checker);
     }
 
     /**
      * @brief Add a value applier to the module.
      */
-    template <DatastoreValueApplier ApplierType> void addValueApplier()
+    template <DatastoreValueApplier ApplierType> void addValueApplier(std::shared_ptr<ApplierType>& applier)
     {
-        m_appliers.push_back(std::make_shared<ApplierType>());
+        m_appliers.push_back(applier);
     }
 
   private:
+    std::list<std::shared_ptr<IDatastoreInitializer>> m_datastore_initializers; ///< Plugin datastore initializers.
     std::list<std::shared_ptr<IDatastoreChecker>> m_checkers; ///< Plugin data checkers.
     std::list<std::shared_ptr<IDatastoreApplier>> m_appliers; ///< Plugin datastore data appliers.
     PluginContextType &m_pluginContext; ///< Plugin context used to share data between different parts of the module.
